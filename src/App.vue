@@ -2,6 +2,9 @@
   <head-bar/>
   <div class="flex-fill-row">
     <nav-menu style="width: 200px"/>
+    <div class="flex-fill-col">
+      <router-view/>
+    </div>
   </div>
 </template>
 

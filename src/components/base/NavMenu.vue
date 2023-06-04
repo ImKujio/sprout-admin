@@ -3,96 +3,62 @@
     <el-scrollbar class="nav-menu-scroll">
       <el-menu
         class="nav-menu"
-        default-active="1-1"
-        @open="handleOpen"
-        @close="handleClose"
+        default-active="/index"
+        router
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon>
-              <location/>
-            </el-icon>
-            <span>Navigator One</span>
-          </template>
-          <el-menu-item index="1-1">item one</el-menu-item>
-          <el-menu-item index="1-2">item two</el-menu-item>
-          <el-menu-item index="1-3">item three</el-menu-item>
-          <el-sub-menu index="1-4">
-            <template #title>item four</template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
-        <el-sub-menu index="2">
-          <template #title>
-            <el-icon>
-              <icon-menu/>
-            </el-icon>
-            <span>Navigator Two</span>
-          </template>
-          <el-menu-item index="2-1">item one</el-menu-item>
-          <el-menu-item index="2-2">item two</el-menu-item>
-          <el-menu-item index="2-3">item three</el-menu-item>
-          <el-sub-menu index="2-4">
-            <template #title>item four</template>
-            <el-menu-item index="2-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
-        <el-sub-menu index="3">
-          <template #title>
-            <el-icon>
-              <document/>
-            </el-icon>
-            <span>Navigator Three</span>
-          </template>
-          <el-menu-item index="3-1">item one</el-menu-item>
-          <el-menu-item index="3-2">item two</el-menu-item>
-          <el-menu-item index="3-3">item three</el-menu-item>
-          <el-sub-menu index="3-4">
-            <template #title>item four</template>
-            <el-menu-item index="3-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
-        <el-sub-menu index="4">
-          <template #title>
-            <el-icon>
-              <setting/>
-            </el-icon>
-            <span>Navigator Four</span>
-          </template>
-          <el-menu-item index="4-1">item one</el-menu-item>
-          <el-menu-item index="4-2">item two</el-menu-item>
-          <el-menu-item index="4-3">item three</el-menu-item>
-          <el-sub-menu index="4-4">
-            <template #title>item four</template>
-            <el-menu-item index="4-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
+        <!--        <el-menu-item index="/index">-->
+        <!--          首页-->
+        <!--        </el-menu-item>-->
+        <nav-menu-item v-for="item in menusTree" :item="item"/>
       </el-menu>
     </el-scrollbar>
   </fill-container>
 </template>
 
 <script setup>
-import {Document, Menu as IconMenu, Location, Setting,} from '@element-plus/icons-vue'
 import FillContainer from "@/components/base/FillContainer.vue";
-import {computed} from "vue";
 import {map2Tree} from "@/utils/collection-utils";
-import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
 import sysMenu from "@/api/sys/sys-menu.js";
+import NavMenuItem from "@/components/base/NavMenuItem.vue";
+import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
+import {computed, watch} from "vue";
+import {useRouter} from "vue-router";
 
-const sysMenus = asyncRef(() => sysMenu.all(['pid', 'type', 'name', 'path', 'sort']), {})
+const index = {
+  id: 1,
+  pid: 0,
+  type: 4,
+  name: '首页',
+  path: '/index',
+  page: 'Index',
+  sort: 0,
+}
 
-const menus = computed(() => {
-  return map2Tree(sysMenus.value)
+const router = useRouter()
+
+const sysMenus = asyncRef(sysMenu.all(['pid', 'type', 'name', 'path', 'page', 'sort']), {"1": index})
+
+const menusTree = computed(() => {
+  const tree = map2Tree(sysMenus.value)
+  tree.splice(0, 0, index)
+  console.log(tree);
+  return tree
+});
+
+watch(menusTree, (n) => {
+
 })
 
-const handleOpen = (key, keyPath) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key, keyPath) => {
-  console.log(key, keyPath)
-}
-loadAsyncRef()
+loadAsyncRef(() => {
+}, () => {
+  console.log(sysMenus.value);
+  Object.values(sysMenus.value).forEach(i => {
+    router.addRoute({
+      path: i.path,
+      component: () => import(`../../pages/${i.page}.vue`)
+    })
+  })
+})
 </script>
 
 <style lang="scss">

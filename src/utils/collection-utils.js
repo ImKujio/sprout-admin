@@ -1,4 +1,3 @@
-
 /**
  * 将Map转换为树形结构
  * @param {Object.<number,?>} map
