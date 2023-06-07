@@ -22,7 +22,7 @@ const title = import.meta.env.VITE_APP_TITLE
 }
 
 #title {
-  width: 168px;
+  width: 188px;
   margin-top: 16px;
   margin-bottom: 16px;
   padding-left: 16px;

@@ -1,7 +1,8 @@
 import Index from '@/pages/Index.vue'
-import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 const routes = [
+    {path: '', redirect: '/index'},
     {path: '/index', component: Index}
 ]
 

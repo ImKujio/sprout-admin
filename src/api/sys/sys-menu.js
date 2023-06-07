@@ -6,6 +6,7 @@
  * @property {number} type - 类型
  * @property {string} name - 菜单名
  * @property {string} path - 路径
+ * @property {string} component - 组件
  * @property {number} sort - 排序
  */
 
