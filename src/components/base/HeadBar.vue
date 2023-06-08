@@ -1,7 +1,7 @@
 <template>
   <div id="head-bar">
     <span id="title">
-      <svg-icon icon="logo" style="width: 28px;height: 28px"/>
+      <svg-icon icon="sprout" style="width: 28px;height: 28px"/>
       <span>{{ title }}</span>
     </span>
   </div>
@@ -31,7 +31,6 @@ const title = import.meta.env.VITE_APP_TITLE
   flex-direction: row;
   align-items: center;
   border-right: 1px solid var(--el-border-color);
-
 
   span {
     font-size: medium;
