@@ -13,12 +13,16 @@
 import request from "@/api/request.js";
 
 export default {
+    TYPE: {
+        MENU: 3,
+        ITEM: 4,
+    },
     /**
      * 查询系统菜单列表
      * @param {Object} params
      * @returns {Promise<SysMenu[]>}
      */
-    list(params){
+    list(params) {
         return request({
             url: '/sys/menu/list',
             method: 'get',
@@ -27,9 +31,9 @@ export default {
     },
     /**
      * 查询系统菜单总数量
-     * @returns {number}
+     * @returns {Promise<number>}
      */
-    total(){
+    total() {
         return request({
             url: '/sys/menu/total',
             method: 'get'
@@ -40,9 +44,9 @@ export default {
      * @param {number} id
      * @returns {Promise<SysMenu>}
      */
-    get(id){
+    get(id) {
         return request({
-            url: '/sys/menu/'+id,
+            url: '/sys/menu/' + id,
             method: 'get'
         })
     },
@@ -50,7 +54,7 @@ export default {
      * 按字段查询所有系统菜单
      * @returns {Promise<Object.<number,SysMenu>>}
      */
-    all(fields){
+    all(fields) {
         return request({
             url: '/sys/menu/all',
             method: 'get',
@@ -61,7 +65,7 @@ export default {
      * 添加或修改系统菜单
      * @param {SysMenu} data
      */
-    put(data){
+    put(data) {
         return request({
             url: '/sys/menu',
             method: 'put',
@@ -72,9 +76,9 @@ export default {
      * 删除系统菜单
      * @param {number} id
      */
-    del(id){
+    del(id) {
         return request({
-            url: '/sys/menu/'+id,
+            url: '/sys/menu/' + id,
             method: 'delete'
         })
     }

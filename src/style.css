@@ -44,3 +44,16 @@ body {
     height: 100%;
     width: 100%;
 }
+
+#nprogress .bar {
+    background: var(--el-color-primary) !important;
+}
+
+.page-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: var(--el-fill-color-light);
+}

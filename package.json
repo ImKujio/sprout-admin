@@ -13,8 +13,9 @@
     "axios": "^1.4.0",
     "element-plus": "^2.3.4",
     "js-cookie": "^3.0.5",
-    "vue": "^3.2.47",
+    "nprogress": "^0.2.0",
     "pinia": "2.0.22",
+    "vue": "^3.2.47",
     "vue-router": "^4.2.2"
   },
   "devDependencies": {

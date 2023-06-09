@@ -4,9 +4,11 @@
       <head-bar/>
       <div class="flex-fill-row">
         <nav-menu/>
-        <section class="page-container">
-          <router-view/>
-        </section>
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component"/>
+          </transition>
+        </router-view>
       </div>
     </div>
   </suspense>
@@ -18,13 +20,18 @@ import NavMenu from "@/components/base/NavMenu.vue";
 </script>
 
 <style>
-.page-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  background-color: var(--el-fill-color-light);
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--el-transition-duration-fast) ease;
 }
 
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
 </style>

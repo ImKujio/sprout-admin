@@ -11,7 +11,7 @@
           <svg-icon icon="home" class="menu-icon"/>
           <span>首页</span>
         </el-menu-item>
-        <nav-menu-item v-for="item in menuTree" :item="item"/>
+        <nav-menu-item v-for="item in menuTree" :key="item.id" :item="item"/>
       </el-menu>
     </el-scrollbar>
   </fill-container>
@@ -22,29 +22,18 @@ import FillContainer from "@/components/base/FillContainer.vue";
 import {map2Tree} from "@/utils/collection-utils";
 import sysMenu from "@/api/sys/sys-menu.js";
 import NavMenuItem from "@/components/base/NavMenuItem.vue";
-import {useRouter, useRoute} from "vue-router";
 import {computed} from "vue";
-
+import {useRouterStateStore} from "@/store.js";
 
 const sysMenus = await sysMenu.all(['pid', 'type', 'name', 'icon', 'path', 'component', 'sort'])
 const menuTree = map2Tree(sysMenus)
 
-const router = useRouter()
-for (let menuId in sysMenus) {
-  const menu = sysMenus[menuId]
-  router.addRoute({
-    path: menu.path,
-    component: () => import(`../../pages/${menu.component}.vue`)
-  })
-}
-
-const {path} = useRoute()
+const {path} = useRouterStateStore()
 
 const active = computed(() => {
   if (!path || path === "" || path === "/") return "/index"
   return path
 })
-
 </script>
 
 <style lang="scss">

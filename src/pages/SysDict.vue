@@ -1,5 +1,7 @@
 <template>
-  字典管理
+  <section class="flex-fill-col">
+    字典管理
+  </section>
 </template>
 
 <script>

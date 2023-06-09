@@ -15,28 +15,26 @@ import {computed} from "vue";
 
 const emits = defineEmits(["load", "update:modelValue"])
 const props = defineProps({
-  modelValue: {type: Array, default: null},
+  modelValue: {type: Object, default: () => {}},
   total: {type: Number, default: 0}
 })
 
 const size = computed({
   get() {
-    return !props.modelValue || !props.modelValue[0] ? 20 : props.modelValue[0]
+    return !props.modelValue || !props.modelValue.size ? 20 : props.modelValue.size
   },
   set(val) {
-    console.log("size",val);
-    emits('update:modelValue', [val, page.value])
+    emits('update:modelValue', {size:val, page:page.value})
     emits("load")
   }
 })
 
 const page = computed({
   get() {
-    return !props.modelValue || !props.modelValue[1] ? 1 : props.modelValue[1]
+    return !props.modelValue || !props.modelValue.page ? 1 : props.modelValue.page
   },
   set(val){
-    console.log("page",val);
-    emits('update:modelValue', [size.value, val])
+    emits('update:modelValue', {size:size.value, page:val})
     emits("load")
   }
 })
