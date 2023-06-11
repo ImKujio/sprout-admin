@@ -1,7 +1,7 @@
 <template>
   <el-dialog class="i-dialog" :closeOnPressEscape=false :closeOnClickModal=false :show-close="false"
-             :model-value="modelValue"
-             @update:modelValue="val => emits('update:modelValue',val)" :width="width" append-to-body>
+             :model-value="modelValue" @update:modelValue="val => emits('update:modelValue',val)"
+             @open="onOpen" @close="onClose" :width="width" append-to-body>
     <template #header>
       <span class="el-dialog__title">{{ title }}</span>
       <span style="float: right;margin-top: -6px">
@@ -12,12 +12,14 @@
       </span>
     </template>
     <div v-loading="loading">
-      <slot></slot>
+      <slot :open="open"></slot>
     </div>
   </el-dialog>
 </template>
 
 <script setup>
+import {ref} from "vue";
+
 const emits = defineEmits(["update:modelValue", "save"])
 const props = defineProps({
   modelValue: {type: Boolean, default: false},
@@ -25,6 +27,16 @@ const props = defineProps({
   width: {type: String, default: "fit-content"},
   loading: {type: Boolean, default: false},
 })
+const open = ref(false)
+
+function onOpen() {
+  open.value = true
+}
+
+function onClose() {
+  open.value = false
+}
+
 </script>
 
 <style>

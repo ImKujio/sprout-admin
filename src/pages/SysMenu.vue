@@ -1,54 +1,50 @@
 <template>
   <section class="page-container">
-    <query-bar v-model="query.where" @load="reload">
-
-    </query-bar>
-    <operate-bar>
-      <el-button type="primary" plain>
-        <svg-icon icon="add" class="el-icon"/>
-        <span>添加</span>
-      </el-button>
-      <el-button type="success" plain>
-        <svg-icon icon="edit" class="el-icon"/>
-        <span>编辑</span>
-      </el-button>
-      <el-button type="danger" plain>
-        <svg-icon icon="del" class="el-icon"/>
-        <span>删除</span>
-      </el-button>
-    </operate-bar>
-    <list-full v-model="select" :list="list" :loading="loading">
-      <el-table-column prop="type" label="类型"/>
-      <el-table-column prop="name" label="菜单名"/>
-      <el-table-column prop="path" label="路径"/>
-      <el-table-column prop="component" label="组件"/>
-      <el-table-column prop="sort" label="排序"/>
-    </list-full>
-    <pager v-model="query.page" :total="total"/>
+    <i-card class="flex-fill-col">
+      <List @onAdd="onAdd" @onEdit="onEdit"/>
+    </i-card>
+    <i-dialog v-model="dialog.open" :loading="dialog.loading" :title="dialog.title"
+              v-slot="{open}" @save="onSave">
+      <From :form="form" :visible="open"/>
+    </i-dialog>
   </section>
 </template>
 
 <script setup>
 import {reactive, ref} from "vue";
-import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
-import sysMenu from "@/api/sys/sys-menu.js";
-import SvgIcon from "@/components/base/SvgIcon.vue";
+import {methodProvide} from "@/utils/vue-utils";
+import {defDialog} from "@/utils/idialog-utils";
+import List from "@/components/sys-menu/List.vue";
+import From from "@/components/sys-menu/Form.vue"
 
-const query = reactive({
-  where: {},
-  order: {},
-  page: {}
-})
-const select = ref(null)
-const loading = ref(false)
-const total = asyncRef(() => sysMenu.total(), 0)
-const list = asyncRef(() => sysMenu.list({}), [])
+const dialog = defDialog()
+const form = ref(reactive({}))
 
-const reload = loadAsyncRef(() => {
-  loading.value = true
-}, () => {
-  loading.value = false
-})
+const listReload = methodProvide('sysMenuReload')
+const formSubmit = methodProvide('sysMenuSubmit')
+
+function onAdd() {
+  dialog.title = "新增菜单"
+  form.value = reactive({pid: 0})
+  dialog.open = true
+}
+
+async function onEdit(row) {
+  dialog.title = "编辑菜单"
+  form.value = reactive(row)
+  dialog.open = true
+}
+
+async function onSave() {
+  dialog.loading = true
+  try {
+    await formSubmit()
+    await listReload()
+    dialog.open = false
+  } finally {
+    dialog.loading = false
+  }
+}
 </script>
 
 <style scoped>

@@ -1,6 +1,5 @@
-import {getCurrentInstance, ref, Ref, UnwrapRef} from "vue";
+import {getCurrentInstance, inject, provide, ref, Ref, UnwrapRef} from "vue";
 import {CountDownLatch} from "./async-utils";
-
 
 /**
  * ## 创建异步的ref响应式对象
@@ -133,4 +132,40 @@ export function loadAsyncRef(before: () => void = () => {}, after: () => void = 
             after()
         })
     }
+}
+
+interface MethodProvide {
+    run?: () => Promise<void>;
+}
+
+/**
+ * 提供一个方法对象，以供组件进行注入和使用。
+ * @param name 用于标识提供的方法对象的名称。
+ * @returns 可以用于调用提供的方法的异步函数。
+ * @throws 如果未提供指定名称的方法对象，则抛出错误。
+ */
+export function methodProvide(name: string): () => Promise<void> {
+    const methodObj: MethodProvide = {};
+    provide(name, methodObj);
+
+    return async () => {
+        if (!methodObj.run) {
+            throw new Error(`methodProvide: ${name} is not injected!`);
+        }
+        await methodObj.run();
+    };
+}
+
+/**
+ * 通过注入将方法对象绑定到组件中，以供组件使用。
+ * @param name 要注入的方法对象的名称。
+ * @param run 需要绑定到方法对象的异步函数。
+ * @throws 如果未提供指定名称的方法对象，则抛出错误。
+ */
+export function methodInject(name: string, run: () => Promise<void>): void {
+    const methodObj: MethodProvide | undefined = inject(name);
+    if (!methodObj) {
+        throw new Error(`methodInject: ${name} is not provided!`);
+    }
+    methodObj.run = run;
 }

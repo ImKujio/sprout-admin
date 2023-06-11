@@ -6,7 +6,7 @@
       background
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
-      style="justify-content: right;padding: 8px 16px"
+      style="justify-content: right;padding: 12px 16px"
   />
 </template>
 
@@ -40,6 +40,9 @@ const page = computed({
 })
 </script>
 
-<style scoped>
-
+<style>
+.list-pager{
+  padding: 12px 16px;
+  border-top: 4px solid var(--theme-background);
+}
 </style>

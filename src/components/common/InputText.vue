@@ -1,18 +1,16 @@
 <template>
-  <el-col :span="span">
-    <el-form-item class="form-input-item" :label="label" :prop="prop" :required="required" :rules="rules">
-      <el-input class="form-item-input" v-model="value" :placeholder="'请输入'+label"
-                @blur="onblur" :disabled="disabled" clearable :type="textarea ? 'textarea' : 'text'">
-        <template v-if="slotPrepend" #prepend>
-          <slot name="prepend"/>
-        </template>
-        <template v-if="slotAppend" #append>
-          <slot name="append"/>
-        </template>
-      </el-input>
-      <div v-if="tip" class="form-input-tip">{{ tip }}</div>
-    </el-form-item>
-  </el-col>
+  <el-form-item class="form-input-item" :label="label" :prop="prop" :required="required" :rules="rules">
+    <el-input class="form-item-input" v-model="value" :placeholder="'请输入'+label"
+              @blur="onblur" :disabled="disabled" clearable :type="textarea ? 'textarea' : 'text'">
+      <template v-if="slotPrepend" #prepend>
+        <slot name="prepend"/>
+      </template>
+      <template v-if="slotAppend" #append>
+        <slot name="append"/>
+      </template>
+    </el-input>
+    <div v-if="tip" class="form-input-tip">{{ tip }}</div>
+  </el-form-item>
 </template>
 <script setup>
 import {computed} from "vue";

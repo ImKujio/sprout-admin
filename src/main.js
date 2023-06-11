@@ -13,6 +13,7 @@ import SvgIcon from '@/components/base/SvgIcon.vue'
 
 import App from './App.vue'
 
+import ICard from "@/components/common/ICard.vue"
 import IDialog  from "@/components/common/IDialog.vue";
 import InputArea  from "@/components/common/InputArea.vue";
 import InputDate  from "@/components/common/InputDate.vue";
@@ -41,6 +42,7 @@ app.use(pinia)
 app.use(router)
 app.use(ElementPlus, {locale})
 
+app.component("ICard",ICard)
 app.component("IDialog",IDialog);
 app.component("InputArea",InputArea);
 app.component("InputDate",InputDate);

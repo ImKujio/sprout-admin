@@ -1,5 +1,5 @@
 <template>
-  <section class="flex-fill-col">
+  <section class="page-container">
     首页
   </section>
 </template>

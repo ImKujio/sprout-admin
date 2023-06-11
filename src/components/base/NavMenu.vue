@@ -105,6 +105,7 @@ const active = computed(() => {
 .nav-menu-scroll {
   position: relative;
   border-right: solid 1px var(--el-menu-border-color);
+  background-color: var(--theme-foreground);
 }
 
 </style>

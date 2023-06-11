@@ -1,4 +1,5 @@
 import request from "@/api/request.js";
+import {SyncLock} from "@/utils/async-utils";
 
 /**
  * @typedef {Object} SysDict
@@ -7,6 +8,8 @@ import request from "@/api/request.js";
  * @property {string} remark - 备注
  * @property {number} owner - 所属类型
  */
+
+const getByNameLock = new SyncLock()
 
 export default {
     /**
@@ -73,6 +76,41 @@ export default {
         return request({
             url: '/sys/dict/'+id,
             method: 'delete'
+        })
+    },
+    /**
+     * 获取所有字典数据
+     * @return {Promise<Object.<String,Object.<number,SysDictItem>>>}
+     */
+    allDict(){
+        return request({
+            url: '/sys/dict/all-dict',
+            method: 'get'
+        })
+    },
+    allDictData:null,
+    /**
+     * 通过字典名获取所有字典项
+     * @param {String} name
+     * @return {Promise<Object.<number,SysDict>>}
+     */
+    getByName(name){
+        return new Promise((resolve, reject) => {
+            getByNameLock.lock().then(() => {
+                if (this.allDictData == null){
+                    this.allDict().then(value => {
+                        this.allDictData = value
+                        const dict = this.allDictData[name]
+                        resolve(!!dict ? dict : {})
+                    }).catch(() => {
+                        resolve({})
+                    })
+                }else {
+                    const dict = this.allDictData[name]
+                    resolve(!!dict ? dict : {})
+                }
+                getByNameLock.unlock()
+            })
         })
     }
 }

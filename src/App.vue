@@ -2,7 +2,7 @@
   <suspense class="flex-fill-col">
     <div class="flex-fill-col">
       <head-bar/>
-      <div class="flex-fill-row">
+      <div class="flex-fill-row" style="background-color: var(--theme-background)">
         <nav-menu/>
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
