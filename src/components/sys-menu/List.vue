@@ -1,5 +1,5 @@
 <template>
-  <operate-bar class="list-operate-bar" @refresh="reload">
+  <operate-bar class="list-operate-bar" @refresh="reload" :filter="false">
     <el-button type="primary" plain @click="emits('onAdd')">
       <svg-icon icon="add" class="el-icon"/>
       <span>添加</span>
@@ -13,13 +13,8 @@
       <span>删除</span>
     </el-button>
   </operate-bar>
-  <list-full v-model="select" :list="list" :loading="loading">
-    <el-table-column label="类型">
-      <template #default="scope">
-        {{types[scope.row.type].label}}
-      </template>
-    </el-table-column>
-    <el-table-column prop="name" label="菜单名"/>
+  <list-full v-model="select" :list="list" tree :loading="loading">
+    <el-table-column prop="name" label="菜单"/>
     <el-table-column prop="path" label="路径"/>
     <el-table-column prop="component" label="组件"/>
     <el-table-column prop="sort" label="排序"/>

@@ -2,11 +2,11 @@
   <div class="operate-bar">
     <slot></slot>
     <div style="flex: 1"/>
-    <el-button plain>
+    <el-button v-if="props.filter" plain>
       <svg-icon icon="filter" class="el-icon"/>
       <span>筛选</span>
     </el-button>
-    <el-button plain @click="onRefresh">
+    <el-button v-if="props.refresh" plain @click="onRefresh">
       <svg-icon icon="refresh" class="el-icon"/>
       <span>刷新</span>
     </el-button>
@@ -15,6 +15,11 @@
 
 <script setup>
 const emits = defineEmits(["refresh"])
+
+const props = defineProps({
+  filter:{type:Boolean,default:true},
+  refresh:{type:Boolean,default:true}
+})
 
 function onRefresh() {
   emits("refresh")

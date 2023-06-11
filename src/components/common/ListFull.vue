@@ -1,7 +1,8 @@
 <template>
   <div class="list-full-wrapper">
-    <el-table ref="tableRef" height="100%" :data="list" v-loading="loading"
-              highlight-current-row @current-change="onSelect">
+    <el-table ref="tableRef" height="100%" :data="listData" v-loading="loading"
+              row-key="id" default-expand-all highlight-current-row
+              @current-change="onSelect">
       <slot></slot>
     </el-table>
   </div>
@@ -9,19 +10,29 @@
 
 <script setup>
 import {computed, ref, watch} from "vue";
+import {list2Tree} from "@/utils/collection-utils.js";
 
 const emits = defineEmits(["update:modelValue"])
 const props = defineProps({
-  modelValue: {type: Number, default: null},
+  modelValue: {type: String, default: null},
   list: {type: Array, default: []},
   loading: {type: Boolean, default: false},
+  tree: {type: Boolean, default: false}
 })
 
 const tableRef = ref()
 
+const listData = computed(() => {
+  if (props.tree){
+    return list2Tree(props.list)
+  }else {
+    return props.list
+  }
+})
+
 const selRow = computed(() => {
   if (!tableRef.value) return null
-  if (props.modelValue == null || props.modelValue === 0) return null
+  if (!props.modelValue) return null
   if (!props.list || props.list.length === 0) return null
   return props.list[props.modelValue]
 })
@@ -35,7 +46,7 @@ watch(selRow, (val) => {
 })
 
 function onSelect(row) {
-  emits("update:modelValue", !row ? null : props.list.indexOf(row))
+  emits("update:modelValue", !row ? null : '' + props.list.indexOf(row))
 }
 </script>
 
