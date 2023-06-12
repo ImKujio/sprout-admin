@@ -33,9 +33,6 @@ function onRefresh() {
   flex-direction: row;
   margin-left: 0 !important;
   margin-right: 0 !important;
-}
-
-.list-operate-bar{
   padding: 12px 16px;
   border-bottom: 4px solid var(--theme-background);
 }

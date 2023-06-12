@@ -45,10 +45,6 @@ body {
     flex-direction: column;
 }
 
-#nprogress .bar {
-    background: var(--el-color-primary) !important;
-}
-
 .page-container {
     flex: 1;
     display: flex;

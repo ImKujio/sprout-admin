@@ -1,14 +1,13 @@
 <template>
-  <el-dialog class="i-dialog" :closeOnPressEscape=false :closeOnClickModal=false :show-close="false"
+  <el-dialog class="i-dialog" :closeOnPressEscape=false :closeOnClickModal=false :show-close="false" :title="title"
              :model-value="modelValue" @update:modelValue="val => emits('update:modelValue',val)"
              @open="onOpen" @close="onClose" :width="width" append-to-body>
-    <template #header>
-      <span class="el-dialog__title">{{ title }}</span>
-      <span style="float: right;margin-top: -6px">
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="emits('update:modelValue',false)">取消</el-button>
         <slot name="right">
           <el-button :disabled="loading" type="primary" @click="emits('save')">保存</el-button>
         </slot>
-        <el-button @click="emits('update:modelValue',false)">取消</el-button>
       </span>
     </template>
     <div v-loading="loading">
@@ -45,6 +44,19 @@ function onClose() {
 }
 
 .i-dialog .el-dialog__body {
-  padding: 20px;
+  padding: 10px 20px;
+}
+
+.i-dialog .el-dialog__footer{
+  padding: 10px 20px 20px;
+}
+
+.dialog-footer{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.dialog-footer .el-button{
+  margin-left: 16px;
 }
 </style>

@@ -32,7 +32,6 @@ watch(() => props.visible, (n) => {
   if (n) reload()
 })
 
-
 const reload = loadAsyncRef()
 </script>
 

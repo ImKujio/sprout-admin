@@ -3,8 +3,7 @@
     <i-card class="flex-fill-col">
       <List @onAdd="onAdd" @onEdit="onEdit"/>
     </i-card>
-    <i-dialog v-model="dialog.open" :loading="dialog.loading" :title="dialog.title"
-              v-slot="{open}" @save="onSave">
+    <i-dialog v-model="dialog.open" :loading="dialog.loading" :title="dialog.title" v-slot="{open}" @save="onSave">
       <From :form="form" :visible="open"/>
     </i-dialog>
   </section>
@@ -19,7 +18,6 @@ import From from "@/components/sys-menu/Form.vue"
 
 const dialog = defDialog()
 const form = ref(reactive({}))
-
 const listReload = methodProvide('sysMenuReload')
 const formSubmit = methodProvide('sysMenuSubmit')
 

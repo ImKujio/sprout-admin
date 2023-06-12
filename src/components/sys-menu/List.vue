@@ -28,11 +28,8 @@ import {defQuery} from "@/utils/query-utils";
 import sysMenu from "@/api/sys/sys-menu.js";
 
 import {ElMessage, ElMessageBox} from "element-plus";
-import sysDict from "@/api/sys/sys-dict.js";
 
 const emits = defineEmits(["onAdd","onEdit"])
-
-const types = asyncRef(sysDict.getByName("admin_menu_type"), {})
 
 const query = defQuery()
 const select = ref(null)

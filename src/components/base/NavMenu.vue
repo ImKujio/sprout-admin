@@ -38,8 +38,8 @@ const active = computed(() => {
 
 <style lang="scss">
 .nav-menu {
-  --el-menu-item-height: 52px;
-  --el-menu-sub-item-height: 52px;
+  --el-menu-item-height: 48px;
+  --el-menu-sub-item-height: 48px;
   --el-menu-base-level-padding: 16px;
   --el-menu-level-padding: 29px;
 

@@ -2,8 +2,6 @@ import Index from '@/pages/Index.vue'
 import {createRouter, createWebHistory} from 'vue-router'
 import sysMenu from "@/api/sys/sys-menu.js";
 import {useRouterStateStore} from "@/store.js";
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
 
 const staticRoutes = [
     {path: '', redirect: '/index'},
@@ -18,7 +16,6 @@ const router = createRouter({
 
 
 router.beforeEach(async (to, from, next) => {
-    NProgress.start()
     const {updatePath,hasLoadMenu,menuLoaded} = useRouterStateStore()
     updatePath(to.path)
     if (!hasLoadMenu) {
@@ -35,10 +32,6 @@ router.beforeEach(async (to, from, next) => {
         return next({...to})
     }
     next()
-})
-
-router.afterEach(() => {
-    NProgress.done()
 })
 
 export default router
