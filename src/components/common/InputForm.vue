@@ -5,9 +5,8 @@
 </template>
 
 <script setup>
-import {computed, inject, ref} from "vue";
+import {computed, ref} from "vue";
 import {ElMessage} from "element-plus";
-import {methodInject} from "@/utils/vue-utils";
 
 const formRef = ref()
 const wSize = [320, 672, 1024]
@@ -15,7 +14,6 @@ const wSize = [320, 672, 1024]
 const props = defineProps({
   form: {type: Object, required: true},
   cols: {type: Number, default: 1},
-  name: {type: String, required: true}
 })
 
 const width = computed(() => {
@@ -23,12 +21,23 @@ const width = computed(() => {
   return wSize[col - 1] + 'px'
 })
 
-methodInject(props.name+"Validate",async () => {
-  await formRef.value.validate(((valid) => {
-    if (!valid){
+async function validate() {
+  try {
+    const valid = await formRef.value.validate()
+    if (!valid) {
       ElMessage.error('校验失败，请检查填写的数据！')
+      return false
+    }else {
+      return true
     }
-  }))
+  }catch (e) {
+    ElMessage.error('校验失败，请检查填写的数据！')
+    return false
+  }
+}
+
+defineExpose({
+  validate
 })
 </script>
 

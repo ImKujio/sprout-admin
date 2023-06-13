@@ -1,12 +1,8 @@
 <template>
-    <el-button
-        :type="type"
-        plain
-        :icon="icon"
-        :disabled="disabled"
-        @click="emits('click')"
-    >{{ label }}
-    </el-button>
+  <el-button :type="type" plain @click="emits('click')" :disabled="disabled">
+    <svg-icon :icon="icon" class="el-icon"/>
+    <span>{{ label }}</span>
+  </el-button>
 </template>
 <script setup>
 const emits = defineEmits(['click'])

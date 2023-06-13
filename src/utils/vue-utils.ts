@@ -1,4 +1,4 @@
-import {getCurrentInstance, inject, provide, ref, Ref, UnwrapRef} from "vue";
+import {getCurrentInstance, inject, provide, ShallowRef, shallowRef} from "vue";
 import {CountDownLatch} from "./async-utils";
 
 /**
@@ -41,8 +41,8 @@ import {CountDownLatch} from "./async-utils";
  * @param  def 默认值
  * @param  promise 异步获取值的promise，或者是一个函数，函数返回一个promise
  */
-export function asyncRef<T>(promise: Promise<T> | (() => Promise<T>), def: T): Ref<UnwrapRef<T>> {
-    const data = ref(def);
+export function asyncRef<T>(promise: Promise<T> | (() => Promise<T>), def: T): ShallowRef<T> {
+    const data = shallowRef(def);
     // 如果是函数，那么就记录到reloadRefs中
     if (typeof promise === 'function') {
         let reloadRefs = getCurrentInstance()['reloadRefs']

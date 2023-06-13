@@ -22,7 +22,7 @@ import NavMenu from "@/components/base/NavMenu.vue";
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity var(--el-transition-duration-fast) ease;
+  transition: opacity 150ms ease;
 }
 
 .fade-enter-from,

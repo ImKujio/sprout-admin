@@ -1,8 +1,16 @@
 /**
  * 将Map转换为树形结构
  * @param {Object.<number,?>} map
+ * @param copy
  */
-export function map2Tree(map) {
+export function map2Tree(map,copy = true) {
+    if (copy){
+        const raw = map
+        map = {}
+        Object.values(raw).forEach(item => {
+            map[item.id] = Object.assign(item)
+        })
+    }
     const tree = []
     Object.values(map).forEach(item => {
         const parent = map[item.pid];
@@ -25,7 +33,7 @@ export function map2Tree(map) {
 export function list2Tree(list) {
     const map = {}
     list.forEach(item => {
-        map[item.id] = item
+        map[item.id] = Object.assign(item)
     })
-    return map2Tree(map)
+    return map2Tree(map,false)
 }

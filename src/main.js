@@ -16,6 +16,7 @@ import App from './App.vue'
 import ICard from "@/components/common/ICard.vue"
 import IDialog  from "@/components/common/IDialog.vue";
 import InputArea  from "@/components/common/InputArea.vue";
+import InputCascader  from "@/components/common/InputCascader.vue";
 import InputDate  from "@/components/common/InputDate.vue";
 import InputForm  from "@/components/common/InputForm.vue";
 import InputRadio  from "@/components/common/InputRadio.vue";
@@ -45,6 +46,7 @@ app.use(ElementPlus, {locale})
 app.component("ICard",ICard)
 app.component("IDialog",IDialog);
 app.component("InputArea",InputArea);
+app.component("InputCascader",InputCascader);
 app.component("InputDate",InputDate);
 app.component("InputForm",InputForm);
 app.component("InputRadio",InputRadio);

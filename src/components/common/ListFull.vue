@@ -1,6 +1,6 @@
 <template>
   <div class="list-full-wrapper">
-    <el-table ref="tableRef" height="100%" :data="listData" v-loading="loading"
+    <el-table ref="tableRef" height="100%" :data="listData" v-loading="list.loading"
               row-key="id" default-expand-all highlight-current-row
               @current-change="onSelect">
       <slot></slot>
@@ -9,35 +9,33 @@
 </template>
 
 <script setup>
-import {computed, ref, watch} from "vue";
+import {computed, ref, toRaw, watch} from "vue";
 import {list2Tree} from "@/utils/collection-utils.js";
+import {List} from "@/utils/page-utils";
 
-const emits = defineEmits(["update:modelValue"])
 const props = defineProps({
-  modelValue: {type: String, default: null},
-  list: {type: Array, default: []},
-  loading: {type: Boolean, default: false},
+  list: {type: List, required: true},
   tree: {type: Boolean, default: false}
 })
 
 const tableRef = ref()
 
 const listData = computed(() => {
-  if (props.tree){
-    return list2Tree(props.list)
-  }else {
-    return props.list
+  if (props.tree) {
+    return list2Tree(props.list.data)
+  } else {
+    return props.list.data
   }
 })
 
 const selRow = computed(() => {
   if (!tableRef.value) return null
-  if (!props.modelValue) return null
-  if (!props.list || props.list.length === 0) return null
-  return props.list[props.modelValue]
+  if (!props.list.select) return null
+  if (!props.list.data || props.list.data.length === 0) return null
+  return props.list.selRow()
 })
 
-watch(selRow, (val) => {
+watch(() => selRow.value, (val) => {
   if (!val) {
     tableRef.value.setCurrentRow()
   } else {
@@ -46,7 +44,7 @@ watch(selRow, (val) => {
 })
 
 function onSelect(row) {
-  emits("update:modelValue", !row ? null : '' + props.list.indexOf(row))
+  props.list.select = !row ? null : '' + props.list.data.indexOf(toRaw(row))
 }
 </script>
 
