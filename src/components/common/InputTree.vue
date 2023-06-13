@@ -1,15 +1,16 @@
 <template>
   <el-form-item class="form-input-item" :label="label" :prop="prop" :required="required">
-    <el-cascader class="form-item-input" v-model="value" :disabled="disabled" :options="optionsTree"
-                 :show-all-levels="false" clearable
-                 :props="{value:valueKey,label:labelKey,emitPath:false,checkStrictly: true}"/>
+    <el-tree-select class="form-item-input" v-model="value" :disabled="disabled" :data="optionsTree"
+                    :show-all-levels="false" check-strictly clearable
+                    :props="{value:valueKey,label:labelKey,emitPath:false}"/>
     <div v-if="tip" class="form-input-tip">{{ tip }}</div>
   </el-form-item>
 </template>
 
 <script setup>
 import {computed} from "vue";
-import {list2Tree, map2Tree} from "@/utils/collection-utils.js";
+import {list2Tree, map2Tree, sortTree} from "@/utils/collection-utils.js";
+import {ElTreeSelect} from "element-plus";
 
 const emits = defineEmits(["update:modelValue"])
 
@@ -22,7 +23,8 @@ const props = defineProps({
   tip: {type: String, default: null},
   options: {type: [Object, Array], default: () => []},
   valueKey: {type: String, default: "id"},
-  labelKey: {type: String, default: "label"}
+  labelKey: {type: String, default: "label"},
+  sort: {type: String, default: null}
 })
 
 const value = computed({
@@ -30,17 +32,20 @@ const value = computed({
     return props.modelValue
   },
   set(val) {
-    console.log("select",val)
+    console.log("select", val)
     emits('update:modelValue', val)
   }
 })
 
 const optionsTree = computed(() => {
-  console.log("options",props.options)
   if (props.options instanceof Array) {
-    return list2Tree(props.options)
+    const tree = list2Tree(props.options)
+    if (!!props.sort) sortTree(tree,props.sort)
+    return tree
   } else {
-    return map2Tree(props.options)
+    const tree = map2Tree(props.options)
+    if (!!props.sort) sortTree(tree,props.sort)
+    return tree
   }
 })
 </script>

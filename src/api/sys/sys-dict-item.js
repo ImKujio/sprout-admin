@@ -1,4 +1,5 @@
 import request from "@/api/request.js";
+import {Query} from "@/utils/page-utils"
 
 /**
  * @description 系统字典项
@@ -11,15 +12,24 @@ import request from "@/api/request.js";
 
 export default {
     /**
+     * 获取新的对象
+     * @param {Object} def
+     * @returns {SysDictItem}
+     */
+    new(def = null){
+        if (!def) return {}
+        else return def
+    },
+    /**
      * 查询系统字典项列表
-     * @param {Object} params
+     * @param {Query} query
      * @returns {Promise<SysDictItem[]>}
      */
-    list(params) {
+    list(query) {
         return request({
             url: '/sys/dict-item/list',
             method: 'get',
-            params: params
+            params: query
         })
     },
     /**

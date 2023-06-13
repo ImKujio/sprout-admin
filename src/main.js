@@ -7,7 +7,6 @@ import 'element-plus/dist/index.css'
 import 'virtual:svg-icons-register'
 
 import ElementPlus from 'element-plus'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
 import SvgIcon from '@/components/base/SvgIcon.vue'
 
@@ -24,6 +23,7 @@ import InputSelect  from "@/components/common/InputSelect.vue";
 import InputSwitch  from "@/components/common/InputSwitch.vue";
 import InputText  from "@/components/common/InputText.vue";
 import InputTime  from "@/components/common/InputTime.vue";
+import InputTree  from "@/components/common/InputTree.vue";
 import ListFull  from "@/components/common/ListFull.vue";
 import ListSize  from "@/components/common/ListSize.vue";
 import OperateBar  from "@/components/common/OperateBar.vue";
@@ -54,6 +54,7 @@ app.component("InputSelect",InputSelect);
 app.component("InputSwitch",InputSwitch);
 app.component("InputText",InputText);
 app.component("InputTime",InputTime);
+app.component("InputTree",InputTree);
 app.component("ListFull",ListFull);
 app.component("ListSize",ListSize);
 app.component("OperateBar",OperateBar);
@@ -67,8 +68,5 @@ app.component("QuerySelect",QuerySelect);
 app.component("QueryText",QueryText);
 
 app.component('SvgIcon',SvgIcon)
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
-}
 
 app.mount('#app')

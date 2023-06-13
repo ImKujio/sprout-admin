@@ -1,6 +1,6 @@
 <template>
   <el-dialog class="i-dialog" :closeOnPressEscape=false :closeOnClickModal=false :show-close="false"
-             :title="dialog.title"
+             :title="dialog.title" clearable
              :model-value="dialog.open" @update:modelValue="val => dialog.open = val"
              @open="onOpen" @close="onClose" :width="width" append-to-body>
     <template #footer>

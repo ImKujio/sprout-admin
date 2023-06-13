@@ -9,20 +9,23 @@
 </template>
 
 <script setup>
-import {computed, ref, toRaw, watch} from "vue";
-import {list2Tree} from "@/utils/collection-utils.js";
+import {computed, ref, watch} from "vue";
+import {list2Tree, sortTree} from "@/utils/collection-utils.js";
 import {List} from "@/utils/page-utils";
 
 const props = defineProps({
   list: {type: List, required: true},
-  tree: {type: Boolean, default: false}
+  tree: {type: Boolean, default: false},
+  sort: {type: String, default: null}
 })
 
 const tableRef = ref()
 
 const listData = computed(() => {
   if (props.tree) {
-    return list2Tree(props.list.data)
+    const tree = list2Tree(props.list.data)
+    if (!!props.sort) sortTree(tree,props.sort)
+    return tree
   } else {
     return props.list.data
   }
@@ -30,9 +33,8 @@ const listData = computed(() => {
 
 const selRow = computed(() => {
   if (!tableRef.value) return null
-  if (!props.list.select) return null
   if (!props.list.data || props.list.data.length === 0) return null
-  return props.list.selRow()
+  return props.list.select
 })
 
 watch(() => selRow.value, (val) => {
@@ -44,7 +46,7 @@ watch(() => selRow.value, (val) => {
 })
 
 function onSelect(row) {
-  props.list.select = !row ? null : '' + props.list.data.indexOf(toRaw(row))
+  props.list.select = row
 }
 </script>
 

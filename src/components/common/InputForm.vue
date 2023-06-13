@@ -41,32 +41,38 @@ defineExpose({
 })
 </script>
 
-<style>
+<style lang="scss">
 .form-input-item {
   margin-bottom: 0;
+
+  .el-form-item__content {
+    flex-direction: row;
+    flex: 1;
+  }
+
+  .el-input-number .el-input__inner {
+    text-align: unset;
+  }
+
+  .form-item-input {
+    margin-bottom: 24px;
+    flex: 1;
+
+    .el-textarea__inner {
+      min-height: 86px !important;
+    }
+
+  }
+
+  .form-input-tip {
+    position: absolute;
+    line-height: 1.6;
+    bottom: 3px;
+    left: 2px;
+    font-size: 13px;
+  }
 }
 
-.form-item-input {
-  margin-bottom: 24px;
-}
 
-.form-input-item .el-input {
-  width: 100%;
-}
 
-.form-item-input .el-textarea__inner {
-  min-height: 86px !important;
-}
-
-.form-input-item .el-input-number .el-input__inner {
-  text-align: unset;
-}
-
-.form-input-tip {
-  position: absolute;
-  line-height: 1.6;
-  bottom: 3px;
-  left: 2px;
-  font-size: 13px;
-}
 </style>

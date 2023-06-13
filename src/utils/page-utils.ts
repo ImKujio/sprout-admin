@@ -19,19 +19,15 @@ class Page {
 }
 
 export class Query {
-    where: Map<string, Where>
-    order: Map<string, string>
+    where: Record<string, Where> = {}
+    order: Record<string, string> = {}
     page: Page
 }
 
 export class List<T> {
     data : T[]
-    select: string | null = null
+    select: T | null = null
     loading: boolean = false
-
-    selRow(): T{
-        return this.data[this.select]
-    }
 }
 
 export function defList<T>(listPromise : (() => Promise<T[]>)) : ShallowReactive<List<T>>{

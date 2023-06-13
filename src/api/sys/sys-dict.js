@@ -1,5 +1,6 @@
 import request from "@/api/request.js";
 import {SyncLock} from "@/utils/async-utils";
+import {Query} from "@/utils/page-utils"
 
 /**
  * @typedef {Object} SysDict
@@ -13,15 +14,24 @@ const getByNameLock = new SyncLock()
 
 export default {
     /**
+     * 获取新的对象
+     * @param {Object} def
+     * @returns {SysDict}
+     */
+    new(def = null){
+        if (!def) return {}
+        else return def
+    },
+    /**
      * 查询系统字典列表
-     * @param {Object} params
+     * @param {Query} query
      * @returns {Promise<SysDict[]>}
      */
-    list(params){
+    list(query){
         return request({
             url: '/sys/dict/list',
             method: 'get',
-            params: params
+            params: query
         })
     },
     /**

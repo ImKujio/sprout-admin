@@ -1,3 +1,6 @@
+import request from "@/api/request.js";
+import {Query} from "@/utils/page-utils"
+
 /**
  * 系统菜单接口
  * @typedef {Object} SysMenu
@@ -5,12 +8,12 @@
  * @property {number} pid - 父编号
  * @property {number} type - 类型
  * @property {string} name - 菜单名
+ * @property {string} icon - 图标
  * @property {string} path - 路径
  * @property {string} component - 组件
  * @property {number} sort - 排序
  */
 
-import request from "@/api/request.js";
 
 export default {
     TYPE: {
@@ -18,15 +21,24 @@ export default {
         ITEM: 4,
     },
     /**
+     * 获取新的对象
+     * @param {Object} def
+     * @returns {SysMenu}
+     */
+    new(def = null){
+        if (!def) return {}
+        else return def
+    },
+    /**
      * 查询系统菜单列表
-     * @param {Object} params
+     * @param {Query} query
      * @returns {Promise<SysMenu[]>}
      */
-    list(params) {
+    list(query) {
         return request({
             url: '/sys/menu/list',
             method: 'get',
-            params: params
+            params: query
         })
     },
     /**

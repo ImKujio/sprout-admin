@@ -1,4 +1,5 @@
 import request from "../request.js";
+import {Query} from "@/utils/page-utils"
 
 /**
  * 系统用户
@@ -11,15 +12,24 @@ import request from "../request.js";
 
 export default {
     /**
+     * 获取新的对象
+     * @param {Object} def
+     * @returns {SysUser}
+     */
+    new(def = null){
+        if (!def) return {}
+        else return def
+    },
+    /**
      * 查询系统用户列表
-     * @param {Object} params
+     * @param {Query} query
      * @returns {Promise<SysUser[]>}
      */
-    list(params){
+    list(query){
         return request({
             url: '/sys/user/list',
             method: 'get',
-            params: params
+            params: query
         })
     },
     /**
