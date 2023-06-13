@@ -50,17 +50,21 @@ function onSelect(row) {
 }
 </script>
 
-<style>
+<style lang="scss">
 .list-full-wrapper {
   flex: 1;
   position: relative;
   margin-left: 12px;
   margin-right: 12px;
-}
 
-.list-full-wrapper .el-table {
-  position: absolute;
-  width: 100%;
+  .el-table {
+    position: absolute;
+    width: 100%;
+  }
+  .svg-icon {
+    width: 18px;
+    height: 18px;
+    vertical-align: text-top;
+  }
 }
-
 </style>

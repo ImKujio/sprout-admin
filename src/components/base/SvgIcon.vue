@@ -23,7 +23,7 @@ const iconName = computed(() => {
 })
 </script>
 
-<style scoped>
+<style>
 
 .svg-icon {
   width: 1em;

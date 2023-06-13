@@ -7,10 +7,10 @@
         <operate-item type="danger" icon="del" label="删除" :disabled="!list.select" @click="onDel"/>
       </operate-bar>
       <list-full :list="list" sort="sort" tree>
-        <el-table-column prop="name" label="菜单"/>
-        <el-table-column prop="icon" label="图标">
+        <el-table-column label="菜单">
           <template #default="{row}">
-            <svg-icon v-if="!!row.icon" :icon="row.icon"/>
+            <svg-icon style="margin-right: 4px" v-if="!!row.icon" :icon="row.icon"/>
+            <span>{{row.name}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="path" label="路径"/>
