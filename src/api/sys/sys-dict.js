@@ -5,7 +5,8 @@ import {Query} from "@/utils/page-utils"
 /**
  * @typedef {Object} SysDict
  * @property {number} id - id
- * @property {string} label - 字典名
+ * @property {string} name - 字典名
+ * @property {string} label - 显示名
  * @property {string} remark - 备注
  * @property {number} owner - 所属类型
  */
@@ -14,11 +15,18 @@ const getByNameLock = new SyncLock()
 
 export default {
     /**
+     * 所属类型
+     */
+    OWNER: {
+        SYS: 1,
+        USER: 2
+    },
+    /**
      * 获取新的对象
      * @param {Object} def
      * @returns {SysDict}
      */
-    new(def = null){
+    new(def = null) {
         if (!def) return {}
         else return def
     },
@@ -27,7 +35,7 @@ export default {
      * @param {Query} query
      * @returns {Promise<SysDict[]>}
      */
-    list(query){
+    list(query) {
         return request({
             url: '/sys/dict/list',
             method: 'get',
@@ -36,9 +44,9 @@ export default {
     },
     /**
      * 查询系统字典总数量
-     * @returns {number}
+     * @returns {Promise<number>}
      */
-    total(){
+    total() {
         return request({
             url: '/sys/dict/total',
             method: 'get'
@@ -49,9 +57,9 @@ export default {
      * @param {number} id
      * @returns {Promise<SysDict>}
      */
-    get(id){
+    get(id) {
         return request({
-            url: '/sys/dict/'+id,
+            url: '/sys/dict/' + id,
             method: 'get'
         })
     },
@@ -60,7 +68,7 @@ export default {
      * @param {string[]} fields
      * @returns {Promise<Object.<number,SysDict>>}
      */
-    all(fields){
+    all(fields) {
         return request({
             url: '/sys/dict/all',
             method: 'get',
@@ -71,7 +79,7 @@ export default {
      * 添加或修改系统字典
      * @param {SysDict} data
      */
-    put(data){
+    put(data) {
         return request({
             url: '/sys/dict',
             method: 'put',
@@ -82,9 +90,9 @@ export default {
      * 删除系统字典
      * @param {number} id
      */
-    del(id){
+    del(id) {
         return request({
-            url: '/sys/dict/'+id,
+            url: '/sys/dict/' + id,
             method: 'delete'
         })
     },
@@ -92,22 +100,22 @@ export default {
      * 获取所有字典数据
      * @return {Promise<Object.<String,Object.<number,SysDictItem>>>}
      */
-    allDict(){
+    allDict() {
         return request({
             url: '/sys/dict/all-dict',
             method: 'get'
         })
     },
-    allDictData:null,
+    allDictData: null,
     /**
      * 通过字典名获取所有字典项
      * @param {String} name
      * @return {Promise<Object.<number,SysDict>>}
      */
-    getByName(name){
+    getByName(name) {
         return new Promise((resolve, reject) => {
             getByNameLock.lock().then(() => {
-                if (this.allDictData == null){
+                if (this.allDictData == null) {
                     this.allDict().then(value => {
                         this.allDictData = value
                         const dict = this.allDictData[name]
@@ -115,7 +123,7 @@ export default {
                     }).catch(() => {
                         resolve({})
                     })
-                }else {
+                } else {
                     const dict = this.allDictData[name]
                     resolve(!!dict ? dict : {})
                 }

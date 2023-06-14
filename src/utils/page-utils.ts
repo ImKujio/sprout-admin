@@ -1,6 +1,6 @@
 import {ElMessage, ElMessageBox} from "element-plus";
 import {asyncRef, methodProvide} from "./vue-utils";
-import {shallowReactive, ShallowReactive, watch} from "vue";
+import {reactive, shallowReactive, ShallowReactive, UnwrapNestedRefs, watch} from "vue";
 
 export class Dialog {
     open: boolean = false
@@ -8,20 +8,20 @@ export class Dialog {
     title: string = ""
 }
 
-class Where {
+export class Where {
     type: string
     value: number | string | boolean
 }
 
-class Page {
-    page: number
-    size: number
+export class Page {
+    page: number = 1
+    size: number = 20
 }
 
 export class Query {
     where: Record<string, Where> = {}
     order: Record<string, string> = {}
-    page: Page
+    page: Page = new Page()
 }
 
 export class List<T> {
@@ -40,8 +40,8 @@ export function defList<T>(listPromise : (() => Promise<T[]>)) : ShallowReactive
     return list
 }
 
-export function defQuery() : ShallowReactive<Query> {
-    return shallowReactive(new Query())
+export function defQuery() : UnwrapNestedRefs<Query> {
+    return reactive(new Query())
 }
 
 export function defDialog() : ShallowReactive<Dialog>{

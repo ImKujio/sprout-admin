@@ -5,6 +5,7 @@ import { createPinia } from 'pinia'
 
 import 'element-plus/dist/index.css'
 import 'virtual:svg-icons-register'
+// import 'element-plus/theme-chalk/dark/css-vars.css'
 
 import ElementPlus from 'element-plus'
 import locale from 'element-plus/lib/locale/lang/zh-cn'

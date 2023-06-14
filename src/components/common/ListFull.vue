@@ -24,7 +24,7 @@ const tableRef = ref()
 const listData = computed(() => {
   if (props.tree) {
     const tree = list2Tree(props.list.data)
-    if (!!props.sort) sortTree(tree,props.sort)
+    if (!!props.sort) sortTree(tree, props.sort)
     return tree
   } else {
     return props.list.data
@@ -57,10 +57,15 @@ function onSelect(row) {
   margin-left: 12px;
   margin-right: 12px;
 
+  .el-table__inner-wrapper::before {
+    height: 0;
+  }
+
   .el-table {
     position: absolute;
     width: 100%;
   }
+
   .svg-icon {
     width: 18px;
     height: 18px;

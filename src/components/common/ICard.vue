@@ -10,7 +10,11 @@
 
 <style>
 .i-card{
-  background-color: var(--theme-foreground);
-  margin: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--el-border-radius-base);
+  background-color: var(--el-bg-color);
+  margin: 12px;
 }
 </style>

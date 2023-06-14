@@ -1,48 +1,57 @@
 <template>
   <el-pagination
-      v-model:current-page="page"
-      v-model:page-size="size"
-      :page-sizes="[20, 50, 100, 200]"
-      background
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-      style="justify-content: right;padding: 12px 16px"
+    v-model:current-page="pageNum"
+    v-model:page-size="size"
+    :page-sizes="[20, 50, 100, 200]"
+    background
+    layout="total, sizes, prev, pager, next, jumper"
+    :total="total"
+    style="justify-content: right;padding: 12px 16px"
   />
 </template>
 
 <script setup>
 import {computed} from "vue";
+import {Page} from "@/utils/page-utils";
 
-const emits = defineEmits(["load", "update:modelValue"])
+const emits = defineEmits(["refresh"])
+
 const props = defineProps({
-  modelValue: {type: Object, default: () => {}},
+  page: {type: Page, required: true},
   total: {type: Number, default: 0}
 })
 
 const size = computed({
   get() {
-    return !props.modelValue || !props.modelValue.size ? 20 : props.modelValue.size
+    return !props.page.size || props.page.size < 20 ? 20 : props.page.size
   },
   set(val) {
-    emits('update:modelValue', {size:val, page:page.value})
-    emits("load")
+    props.page.size = !val || val < 20 ? 20 : val
+    reload()
   }
 })
 
-const page = computed({
+const pageNum = computed({
   get() {
-    return !props.modelValue || !props.modelValue.page ? 1 : props.modelValue.page
+    return !props.page.page || props.page.page < 1 ? 1 : props.page.page
   },
-  set(val){
-    emits('update:modelValue', {size:size.value, page:val})
-    emits("load")
+  set(val) {
+    props.page.page = !val || val < 1 ? 1 : val
+    reload()
   }
 })
+
+function reload() {
+  console.log("reload",props.page)
+  if (!props.page.size || props.page.size < 20) return
+  if (!props.page.page || props.page.page < 1) return
+  emits("refresh")
+}
 </script>
 
 <style>
-.list-pager{
+.list-pager {
   padding: 12px 16px;
-  border-top: 4px solid var(--theme-background);
+  border-top: 4px solid var(--el-bg-color-page);
 }
 </style>

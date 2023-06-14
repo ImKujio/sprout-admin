@@ -8,7 +8,6 @@
     </el-button>
     <el-button v-if="props.refresh" plain @click="onRefresh">
       <svg-icon icon="refresh" class="el-icon"/>
-      <span>刷新</span>
     </el-button>
   </div>
 </template>
@@ -27,13 +26,17 @@ function onRefresh() {
 
 </script>
 
-<style>
+<style lang="scss">
 .operate-bar{
   display: flex;
   flex-direction: row;
   margin-left: 0 !important;
   margin-right: 0 !important;
   padding: 12px 16px;
-  border-bottom: 4px solid var(--theme-background);
+  border-bottom: 4px solid var(--el-bg-color-page);
+
+  .el-button{
+    padding: 8px 10px;
+  }
 }
 </style>

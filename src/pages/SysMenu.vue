@@ -1,6 +1,6 @@
 <template>
-  <section class="page-container">
-    <i-card class="flex-fill-col">
+  <section>
+    <i-card>
       <operate-bar :filter="false" @refresh="reload">
         <operate-item type="primary" icon="add" label="新增" @click="onAdd"/>
         <operate-item type="success" icon="edit" label="编辑" :disabled="!list.select" @click="onEdit"/>
@@ -39,8 +39,6 @@ import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
 import {defDialog, defList, defQuery, handleDel} from "@/utils/page-utils";
 import sysMenu from "@/api/sys/sys-menu.js";
 import sysDict from "@/api/sys/sys-dict.js";
-import InputText from "@/components/common/InputText.vue";
-import SvgIcon from "@/components/base/SvgIcon.vue";
 
 const formRef = ref()
 
@@ -52,7 +50,7 @@ const types = asyncRef(sysDict.getByName("admin_menu_type"), {})
 
 const menus = computed(() => {
   const data = list.data.filter(i => i.type === sysMenu.TYPE.MENU)
-  data.splice(0,0,{id:0,pid:-1,name:"主目录"})
+  data.splice(0,0,sysMenu.new({id:0,pid:-1,name:"主目录"}))
   return data
 })
 

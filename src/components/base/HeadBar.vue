@@ -4,6 +4,7 @@
       <svg-icon icon="sprout" style="width: 28px;height: 28px"/>
       <span>{{ title }}</span>
     </span>
+    <div style="flex: 1"/>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ const title = import.meta.env.VITE_APP_TITLE
   flex-direction: row;
   align-items: center;
   border-bottom: 1px solid var(--el-border-color);
+  background-color: var(--el-bg-color);
 }
 
 #title {
