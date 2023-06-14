@@ -1,11 +1,13 @@
 import request from "@/api/request.js";
 import {Query} from "@/utils/page-utils"
+import {toRaw} from "vue";
 
 /**
  * @description 系统字典项
  * @typedef {Object} SysDictItem
  * @property {number} id - id
- * @property {string} label - 字典项名
+ * @property {string} name - 名称
+ * @property {string} label - 显示名
  * @property {string} style - 样式
  * @property {string} remark - 备注
  */
@@ -18,7 +20,7 @@ export default {
      */
     new(def = null){
         if (!def) return {}
-        else return def
+        else return Object.assign({},toRaw(def))
     },
     /**
      * 查询系统字典项列表

@@ -1,4 +1,4 @@
-import {getCurrentInstance, inject, provide, ShallowRef, shallowRef} from "vue";
+import {getCurrentInstance, inject, provide, ShallowRef, shallowRef, toRaw} from "vue";
 import {CountDownLatch} from "./async-utils";
 
 /**

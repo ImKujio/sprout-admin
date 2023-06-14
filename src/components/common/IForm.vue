@@ -42,7 +42,7 @@ defineExpose({
 </script>
 
 <style lang="scss">
-.form-input-item {
+.i-form-item {
   margin-bottom: 0;
 
   .el-form-item__content {
@@ -54,7 +54,7 @@ defineExpose({
     text-align: unset;
   }
 
-  .form-item-input {
+  .i-form-input {
     margin-bottom: 24px;
     flex: 1;
 
@@ -64,7 +64,7 @@ defineExpose({
 
   }
 
-  .form-input-tip {
+  .i-form-tip {
     position: absolute;
     line-height: 1.6;
     bottom: 3px;

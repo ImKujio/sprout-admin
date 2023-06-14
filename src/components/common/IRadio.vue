@@ -1,6 +1,6 @@
 <template>
-  <el-form-item class="form-input-item" :label="label" :prop="prop" :required="required">
-    <el-radio-group class="form-item-input" v-model="value" :disabled="disabled">
+  <el-form-item class="i-form-item" :label="label" :prop="prop" :required="required">
+    <el-radio-group class="i-form-input" v-model="value" :disabled="disabled">
       <el-radio
         v-for="(item,index) in options"
         :key="index"
@@ -9,7 +9,7 @@
         {{ item[labelKey] }}
       </el-radio>
     </el-radio-group>
-    <div v-if="tip" class="form-input-tip">{{ tip }}</div>
+    <div v-if="tip" class="i-form-tip">{{ tip }}</div>
   </el-form-item>
 </template>
 <script setup>

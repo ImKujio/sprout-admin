@@ -1,8 +1,8 @@
 <template>
   <el-col :span="span">
-    <el-form-item class="form-input-item" :label="label" :prop="prop">
-      <el-switch class="form-item-input" v-model="value" :disabled="disabled" />
-      <div v-if="tip" class="form-input-tip">{{ tip }}</div>
+    <el-form-item class="i-form-item" :label="label" :prop="prop">
+      <el-switch class="i-form-input" v-model="value" :disabled="disabled" />
+      <div v-if="tip" class="i-form-tip">{{ tip }}</div>
     </el-form-item>
   </el-col>
 </template>

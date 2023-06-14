@@ -1,12 +1,13 @@
 <template>
   <el-pagination
+    class="i-page"
     v-model:current-page="pageNum"
     v-model:page-size="size"
     :page-sizes="[20, 50, 100, 200]"
     background
     layout="total, sizes, prev, pager, next, jumper"
     :total="total"
-    style="justify-content: right;padding: 12px 16px"
+    style="justify-content: right"
   />
 </template>
 
@@ -42,7 +43,6 @@ const pageNum = computed({
 })
 
 function reload() {
-  console.log("reload",props.page)
   if (!props.page.size || props.page.size < 20) return
   if (!props.page.page || props.page.page < 1) return
   emits("refresh")
@@ -50,8 +50,4 @@ function reload() {
 </script>
 
 <style>
-.list-pager {
-  padding: 12px 16px;
-  border-top: 4px solid var(--el-bg-color-page);
-}
 </style>

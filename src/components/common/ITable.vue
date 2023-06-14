@@ -1,6 +1,6 @@
 <template>
-  <div class="list-full-wrapper">
-    <el-table ref="tableRef" height="100%" :data="listData" v-loading="list.loading"
+  <div class="i-table" :style="{flex: !height ? 1 : 'unset',height: !height ? 'unset' : height}">
+    <el-table ref="tableRef" :height="!height ? '100%' : height" :data="listData" v-loading="list.loading"
               row-key="id" default-expand-all highlight-current-row
               @current-change="onSelect">
       <slot></slot>
@@ -16,7 +16,8 @@ import {List} from "@/utils/page-utils";
 const props = defineProps({
   list: {type: List, required: true},
   tree: {type: Boolean, default: false},
-  sort: {type: String, default: null}
+  sort: {type: String, default: null},
+  height: {type: String, default: null}
 })
 
 const tableRef = ref()
@@ -51,11 +52,9 @@ function onSelect(row) {
 </script>
 
 <style lang="scss">
-.list-full-wrapper {
+.i-table {
   flex: 1;
   position: relative;
-  margin-left: 12px;
-  margin-right: 12px;
 
   .el-table__inner-wrapper::before {
     height: 0;

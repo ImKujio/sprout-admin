@@ -1,6 +1,7 @@
 import request from "@/api/request.js";
 import {SyncLock} from "@/utils/async-utils";
 import {Query} from "@/utils/page-utils"
+import {toRaw} from "vue";
 
 /**
  * @typedef {Object} SysDict
@@ -28,7 +29,7 @@ export default {
      */
     new(def = null) {
         if (!def) return {}
-        else return def
+        else return Object.assign({},toRaw(def))
     },
     /**
      * 查询系统字典列表

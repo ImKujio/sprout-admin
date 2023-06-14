@@ -20,16 +20,17 @@ import NavMenu from "@/components/base/NavMenu.vue";
 </script>
 
 <style>
+.body-container{
+  background-color: var(--el-bg-color-page);
+}
+
 .body-container > section{
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
   overflow: hidden;
-  background-color: var(--el-bg-color-page);
+  padding: 12px;
 }
-
 
 .fade-enter-active{
   transition: opacity 0.2s ease, transform 0.2s ease;

@@ -1,9 +1,9 @@
 <template>
   <el-col :span="span">
-    <el-form-item class="form-input-item" :label="label" :prop="prop" :required="required">
-      <el-date-picker class="form-item-input" v-model="value" :placeholder="'请选择'+label"
+    <el-form-item class="i-form-item" :label="label" :prop="prop" :required="required">
+      <el-date-picker class="i-form-input" v-model="value" :placeholder="'请选择'+label"
                       value-format="YYYY-MM-DD" :disabled="disabled" clearable/>
-      <div v-if="tip" class="form-input-tip">{{ tip }}</div>
+      <div v-if="tip" class="i-form-tip">{{ tip }}</div>
     </el-form-item>
   </el-col>
 </template>

@@ -4,7 +4,7 @@
              :model-value="dialog.open" @update:modelValue="val => dialog.open = val"
              @open="onOpen" @close="onClose" :width="width" append-to-body>
     <template #footer>
-      <span class="dialog-footer">
+      <span class="i-dialog-footer">
         <el-button @click="dialog.open = false">取消</el-button>
         <slot name="right">
           <el-button :disabled="dialog.loading" type="primary" @click="emits('save')">保存</el-button>
@@ -38,25 +38,27 @@ function onClose() {
 
 </script>
 
-<style>
-.i-dialog .el-dialog__header {
-  margin-right: 0;
-}
+<style lang="scss">
+.i-dialog {
+  .el-dialog__header {
+    margin-right: 0;
+  }
 
-.i-dialog .el-dialog__body {
-  padding: 10px 20px;
-}
+  .el-dialog__body {
+    padding: 10px 20px;
+  }
 
-.i-dialog .el-dialog__footer {
-  padding: 10px 20px 20px;
-}
+  .el-dialog__footer {
+    padding: 10px 20px 20px;
+  }
 
-.dialog-footer {
-  display: flex;
-  flex-direction: row-reverse;
-}
+  .i-dialog-footer {
+    display: flex;
+    flex-direction: row-reverse;
 
-.dialog-footer .el-button {
-  margin-left: 16px;
+    .el-button {
+      margin-left: 16px;
+    }
+  }
 }
 </style>

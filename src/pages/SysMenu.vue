@@ -1,12 +1,14 @@
 <template>
   <section>
-    <i-card>
+    <i-card padding="10px 16px">
       <operate-bar :filter="false" @refresh="reload">
         <operate-item type="primary" icon="add" label="新增" @click="onAdd"/>
         <operate-item type="success" icon="edit" label="编辑" :disabled="!list.select" @click="onEdit"/>
         <operate-item type="danger" icon="del" label="删除" :disabled="!list.select" @click="onDel"/>
       </operate-bar>
-      <list-full :list="list" sort="sort" tree>
+    </i-card>
+    <i-card fill margin="4px 0 0" padding="0 16px">
+      <i-table :list="list" sort="sort" tree>
         <el-table-column label="菜单">
           <template #default="{row}">
             <svg-icon style="margin-right: 4px" v-if="!!row.icon" :icon="row.icon"/>
@@ -16,19 +18,19 @@
         <el-table-column prop="path" label="路径"/>
         <el-table-column prop="component" label="组件"/>
         <el-table-column prop="sort" label="排序"/>
-      </list-full>
+      </i-table>
     </i-card>
     <i-dialog :dialog="dialog" @save="onSave">
-      <input-form ref="formRef" :form="form">
-        <input-radio v-model="form.type" prop="type" label="类型" :options="types"/>
-        <input-tree v-model="form.pid" prop="pid" label="上级菜单" :options="menus" label-key="name" sort="sort" required/>
-        <input-text v-model="form.name" prop="name" label="菜单名" required/>
-        <input-text v-model="form.icon" prop="icon" label="图标"/>
-        <input-text v-if="form.type === sysMenu.TYPE.ITEM" v-model="form.path" prop="path" label="路径" required/>
-        <input-text v-if="form.type === sysMenu.TYPE.ITEM" v-model="form.component" prop="component" label="组件"
+      <i-form ref="formRef" :form="form">
+        <i-radio v-model="form.type" prop="type" label="类型" :options="types"/>
+        <i-tree-select v-model="form.pid" prop="pid" label="上级菜单" :options="menus" label-key="name" sort="sort" required/>
+        <i-input v-model="form.name" prop="name" label="菜单名" required/>
+        <i-input v-model="form.icon" prop="icon" label="图标"/>
+        <i-input v-if="form.type === sysMenu.TYPE.ITEM" v-model="form.path" prop="path" label="路径" required/>
+        <i-input v-if="form.type === sysMenu.TYPE.ITEM" v-model="form.component" prop="component" label="组件"
                     required/>
-        <input-text v-model="form.sort" prop="sort" label="排序" number/>
-      </input-form>
+        <i-input v-model="form.sort" prop="sort" label="排序" number/>
+      </i-form>
     </i-dialog>
   </section>
 </template>
@@ -36,13 +38,13 @@
 <script setup>
 import {computed, ref} from "vue";
 import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
-import {defDialog, defList, defQuery, handleDel} from "@/utils/page-utils";
+import {defDialog, defList, handleDel, allQuery} from "@/utils/page-utils";
 import sysMenu from "@/api/sys/sys-menu.js";
 import sysDict from "@/api/sys/sys-dict.js";
 
 const formRef = ref()
 
-const query = defQuery()
+const query = allQuery()
 const dialog = defDialog()
 const form = ref(sysMenu.new())
 const list = defList(() => sysMenu.list(query))

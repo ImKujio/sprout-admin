@@ -1,5 +1,6 @@
 import request from "../request.js";
 import {Query} from "@/utils/page-utils"
+import {toRaw} from "vue";
 
 /**
  * 系统用户
@@ -18,7 +19,7 @@ export default {
      */
     new(def = null){
         if (!def) return {}
-        else return def
+        else return Object.assign({},toRaw(def))
     },
     /**
      * 查询系统用户列表

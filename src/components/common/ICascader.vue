@@ -1,9 +1,9 @@
 <template>
-  <el-form-item class="form-input-item" :label="label" :prop="prop" :required="required">
-    <el-cascader class="form-item-input" v-model="value" :disabled="disabled" :options="optionsTree"
+  <el-form-item class="i-form-item" :label="label" :prop="prop" :required="required">
+    <el-cascader class="i-form-input" v-model="value" :disabled="disabled" :options="optionsTree"
                  :show-all-levels="false" clearable
                  :props="{value:valueKey,label:labelKey,emitPath:false,checkStrictly: true}"/>
-    <div v-if="tip" class="form-input-tip">{{ tip }}</div>
+    <div v-if="tip" class="i-form-tip">{{ tip }}</div>
   </el-form-item>
 </template>
 
