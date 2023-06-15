@@ -58,9 +58,7 @@ import {ref} from "vue";
 import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
 import {allQuery, defDialog, defList, defQuery, handleDel, tempList} from "@/utils/page-utils";
 import sysDict from "@/api/sys/sys-dict.js";
-import ICard from "@/components/common/ICard.vue";
 import sysDictItem from "@/api/sys/sys-dict-item.js";
-import IDialog from "@/components/common/IDialog.vue";
 
 const dictFormRef = ref()
 
@@ -70,6 +68,8 @@ const dictForm = ref(sysDict.new())
 const dictList = defList(() => sysDict.list(dictQuery))
 const dictTotal = asyncRef(() => sysDict.total(), 0)
 
+const owners = asyncRef(sysDict.getByName("sys_owner"), {})
+
 const itemFormRef = ref()
 
 const itemQuery = allQuery()
@@ -77,21 +77,17 @@ const itemDialog = defDialog()
 const itemForm = ref(sysDictItem.new())
 const itemList = tempList(() => sysDictItem.list(itemQuery))
 
-const owners = asyncRef(sysDict.getByName("sys_owner"), {})
-
 function onDictAdd() {
-  dictForm.value = sysDict.new({owner: sysDict.OWNER.USER})
-  dictDialog.title = "新增字典"
   itemList.clear()
-  dictDialog.open = true
+  dictList.preAdd(dictForm,{owner: sysDict.OWNER.USER})
+  dictDialog.open("新增字典")
 }
 
 function onDictEdit() {
-  dictForm.value = dictList.select
-  dictDialog.title = "编辑字典"
+  dictList.preEdit(dictForm)
   itemQuery.putWhere("dict","=",dictList.select.id)
   itemList.load()
-  dictDialog.open = true
+  dictDialog.open("编辑字典")
 }
 
 async function onDictDel() {
@@ -103,23 +99,18 @@ async function onSave() {
   if (!await dictFormRef.value.validate()) return
   dictDialog.loading = true
   await sysDict.put(dictForm.value)
-  dictDialog.open = false
-  dictDialog.loading = false
+  dictDialog.close()
   reload()
 }
 
 function onItemAdd() {
-  itemList.edit = false
-  itemForm.value = sysDictItem.new()
-  itemDialog.title = "新增字典项"
-  itemDialog.open = true
+  itemList.preAdd(itemForm, sysDictItem.new())
+  itemDialog.open("新增字典项")
 }
 
 function onItemEdit() {
-  itemList.edit = true
-  itemForm.value = Object.assign({},itemList.select)
-  itemDialog.title = "编辑字典项"
-  itemDialog.open = true
+  itemList.preEdit(itemForm)
+  itemDialog.open("编辑字典项")
 }
 
 function onItemDel() {
@@ -127,9 +118,9 @@ function onItemDel() {
 }
 
 async function onItemSave() {
-  if (!await  itemFormRef.value.validate()) return
+  if (!await itemFormRef.value.validate()) return
   itemList.put(itemForm.value)
-  itemDialog.open = false
+  itemDialog.close()
 }
 
 const reload = loadAsyncRef(() => {

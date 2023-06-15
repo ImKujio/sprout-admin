@@ -1,11 +1,21 @@
 import {ElMessage, ElMessageBox} from "element-plus";
 import {asyncRef, methodProvide} from "./vue-utils";
-import {reactive, shallowReactive, ShallowReactive, toRaw, UnwrapNestedRefs, watch} from "vue";
+import {reactive, ref, Ref, shallowReactive, ShallowReactive, toRaw, UnwrapNestedRefs, UnwrapRef, watch} from "vue";
 
 export class Dialog {
-    open: boolean = false
+    isOpen: boolean = false
     loading: boolean = false
     title: string = ""
+
+    open(title: string = ""){
+        this.title = title
+        this.isOpen = true
+    }
+
+    close(){
+        this.isOpen = false
+        this.loading = false
+    }
 }
 
 export class Where {
@@ -37,11 +47,22 @@ export class List<T> {
     data: T[]
     select: T | null = null
     loading: boolean = false
+
+    protected _isEdit: boolean = false
+
+    preAdd(form: Ref<UnwrapRef<any>>, val: Object){
+        form.value = ref(val).value
+        this._isEdit = false
+    }
+
+    preEdit(form: Ref<UnwrapRef<any>>){
+        form.value = ref(Object.assign({},this.select)).value
+        this._isEdit = true
+    }
 }
 
 export class TempList<T> extends List<T> {
     promise: (() => Promise<T[]>)
-    edit: boolean = false
 
 
     constructor(promise: () => Promise<T[]>) {
@@ -64,7 +85,7 @@ export class TempList<T> extends List<T> {
 
     put(form: T) {
         const data = Array.of(...this.data)
-        if (this.edit) {
+        if (this._isEdit) {
             const index = data.indexOf(this.select)
             if (index < 0)
                 data.push(form)

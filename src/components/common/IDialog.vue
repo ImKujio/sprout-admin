@@ -1,11 +1,11 @@
 <template>
   <el-dialog class="i-dialog" :closeOnPressEscape=false :closeOnClickModal=false :show-close="false"
              :title="dialog.title" clearable
-             :model-value="dialog.open" @update:modelValue="val => dialog.open = val"
+             :model-value="dialog.isOpen" @update:modelValue="val => dialog.isOpen = val"
              @open="onOpen" @close="onClose" :width="width" append-to-body>
     <template #footer>
       <span class="i-dialog-footer">
-        <el-button @click="dialog.open = false">取消</el-button>
+        <el-button @click="dialog.isOpen = false">取消</el-button>
         <slot name="right">
           <el-button :disabled="dialog.loading" type="primary" @click="emits('save')">保存</el-button>
         </slot>

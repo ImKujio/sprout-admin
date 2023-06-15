@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="formRef" :style="{width:width}" :model="form" label-width="auto" :show-message="false">
+  <el-form ref="formRef" class="i-form" :style="style" :model="form" label-width="auto" :show-message="false">
     <slot></slot>
   </el-form>
 </template>
@@ -16,9 +16,16 @@ const props = defineProps({
   cols: {type: Number, default: 1},
 })
 
-const width = computed(() => {
+const style = computed(() => {
   const col = props.cols < 1 || props.cols > 3 ? 2 : props.cols
-  return wSize[col - 1] + 'px'
+  const fr = []
+  for (let i = 0; i < col; i++) {
+    fr.push("1fr")
+  }
+  return {
+    width: wSize[col - 1] + "px",
+    gridTemplateColumns: fr.join(" ")
+  }
 })
 
 async function validate() {
@@ -27,10 +34,10 @@ async function validate() {
     if (!valid) {
       ElMessage.error('校验失败，请检查填写的数据！')
       return false
-    }else {
+    } else {
       return true
     }
-  }catch (e) {
+  } catch (e) {
     ElMessage.error('校验失败，请检查填写的数据！')
     return false
   }
@@ -42,37 +49,39 @@ defineExpose({
 </script>
 
 <style lang="scss">
-.i-form-item {
-  margin-bottom: 0;
+.i-form {
+  display: grid;
+  grid-column-gap: 32px;
 
-  .el-form-item__content {
-    flex-direction: row;
-    flex: 1;
-  }
+  .i-form-item {
+    margin-bottom: 0;
 
-  .el-input-number .el-input__inner {
-    text-align: unset;
-  }
-
-  .i-form-input {
-    margin-bottom: 24px;
-    flex: 1;
-
-    .el-textarea__inner {
-      min-height: 86px !important;
+    .el-form-item__content {
+      flex-direction: row;
+      flex: 1;
     }
 
-  }
+    .el-input-number .el-input__inner {
+      text-align: unset;
+    }
 
-  .i-form-tip {
-    position: absolute;
-    line-height: 1.6;
-    bottom: 3px;
-    left: 2px;
-    font-size: 13px;
+    .i-form-input {
+      margin-bottom: 24px;
+      flex: 1;
+
+      .el-textarea__inner {
+        min-height: 86px !important;
+      }
+
+    }
+
+    .i-form-tip {
+      position: absolute;
+      line-height: 1.6;
+      bottom: 3px;
+      left: 2px;
+      font-size: 13px;
+    }
   }
 }
-
-
-
 </style>

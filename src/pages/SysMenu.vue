@@ -59,13 +59,13 @@ const menus = computed(() => {
 function onAdd() {
   form.value = sysMenu.new({pid:0})
   dialog.title = "新增菜单"
-  dialog.open = true
+  dialog.isOpen = true
 }
 
 function onEdit() {
   form.value = list.select
   dialog.title = "编辑菜单"
-  dialog.open = true
+  dialog.isOpen = true
 }
 
 async function onDel() {
@@ -77,7 +77,7 @@ async function onSave() {
   if (!await formRef.value.validate()) return
   dialog.loading = true
   await sysMenu.put(form.value)
-  dialog.open = false
+  dialog.isOpen = false
   dialog.loading = false
   reload()
 }

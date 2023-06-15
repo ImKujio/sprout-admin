@@ -28,6 +28,7 @@ const style = computed(() => {
   flex-direction: column;
   background-color: var(--el-bg-color);
   border-radius: var(--el-border-radius-small);
-  border: 1px solid var(--el-border-color);
+  box-shadow: 0 0 2px var(--el-border-color);
+  //border: 1px solid var(--el-border-color);
 }
 </style>
