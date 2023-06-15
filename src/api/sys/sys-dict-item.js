@@ -1,6 +1,5 @@
 import request from "@/api/request.js";
 import {Query} from "@/utils/page-utils"
-import {toRaw} from "vue";
 
 /**
  * @description 系统字典项
@@ -19,8 +18,7 @@ export default {
      * @returns {SysDictItem}
      */
     new(def = null){
-        if (!def) return {}
-        else return Object.assign({},toRaw(def))
+        return {}
     },
     /**
      * 查询系统字典项列表

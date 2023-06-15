@@ -21,32 +21,30 @@
       </i-table>
     </i-card>
     <i-dialog :dialog="dialog" @save="onSave">
-      <i-form ref="formRef" :form="form">
-        <i-radio v-model="form.type" prop="type" label="类型" :options="types"/>
-        <i-tree-select v-model="form.pid" prop="pid" label="上级菜单" :options="menus" label-key="name" sort="sort" required/>
-        <i-input v-model="form.name" prop="name" label="菜单名" required/>
-        <i-input v-model="form.icon" prop="icon" label="图标"/>
-        <i-input v-if="form.type === sysMenu.TYPE.ITEM" v-model="form.path" prop="path" label="路径" required/>
-        <i-input v-if="form.type === sysMenu.TYPE.ITEM" v-model="form.component" prop="component" label="组件"
+      <i-form :form="form">
+        <i-radio v-model="form.data.type" prop="type" label="类型" :options="types"/>
+        <i-tree-select v-model="form.data.pid" prop="pid" label="上级菜单" :options="menus" label-key="name" sort="sort" required/>
+        <i-input v-model="form.data.name" prop="name" label="菜单名" required/>
+        <i-input v-model="form.data.icon" prop="icon" label="图标"/>
+        <i-input v-if="form.data.type === sysMenu.TYPE.ITEM" v-model="form.data.path" prop="path" label="路径" required/>
+        <i-input v-if="form.data.type === sysMenu.TYPE.ITEM" v-model="form.data.component" prop="component" label="组件"
                     required/>
-        <i-input v-model="form.sort" prop="sort" label="排序" number/>
+        <i-input v-model="form.data.sort" prop="sort" label="排序" number/>
       </i-form>
     </i-dialog>
   </section>
 </template>
 
 <script setup>
-import {computed, ref} from "vue";
+import {computed} from "vue";
 import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
-import {defDialog, defList, handleDel, allQuery} from "@/utils/page-utils";
+import {defDialog, defList, allQuery, defForm} from "@/utils/page-utils";
 import sysMenu from "@/api/sys/sys-menu.js";
 import sysDict from "@/api/sys/sys-dict.js";
 
-const formRef = ref()
-
 const query = allQuery()
 const dialog = defDialog()
-const form = ref(sysMenu.new())
+const form = defForm(sysMenu.new())
 const list = defList(() => sysMenu.list(query))
 const types = asyncRef(sysDict.getByName("admin_menu_type"), {})
 
@@ -57,28 +55,24 @@ const menus = computed(() => {
 })
 
 function onAdd() {
-  form.value = sysMenu.new({pid:0})
-  dialog.title = "新增菜单"
-  dialog.isOpen = true
+  form.add(def => def.pid = 0)
+  dialog.open("新增菜单")
 }
 
 function onEdit() {
-  form.value = list.select
-  dialog.title = "编辑菜单"
-  dialog.isOpen = true
+  form.edit(list.select)
+  dialog.open("编辑菜单")
 }
 
-async function onDel() {
-  await handleDel(sysMenu.del(list.select.id))
-  reload()
+function onDel() {
+  list.del(sysMenu.del,reload)
 }
 
 async function onSave() {
-  if (!await formRef.value.validate()) return
+  if (!await form.valid()) return
   dialog.loading = true
-  await sysMenu.put(form.value)
-  dialog.isOpen = false
-  dialog.loading = false
+  await sysMenu.put(form.data)
+  dialog.close()
   reload()
 }
 

@@ -24,9 +24,9 @@
     </i-card>
     <i-dialog :dialog="dictDialog" @save="onSave">
       <i-form ref="dictFormRef" :form="dictForm" :cols="3">
-        <i-input v-model="dictForm.name" prop="name" label="字典名" required/>
-        <i-input v-model="dictForm.label" prop="label" label="显示名" required/>
-        <i-input v-model="dictForm.remark" prop="remark" label="备注"/>
+        <i-input v-model="dictForm.data.name" prop="name" label="字典名" required/>
+        <i-input v-model="dictForm.data.label" prop="label" label="显示名" required/>
+        <i-input v-model="dictForm.data.remark" prop="remark" label="备注"/>
       </i-form>
       <operate-bar style="margin:8px 0" :refresh="false" :filter="false">
         <operate-item type="primary" icon="add" label="新增" @click="onItemAdd"/>
@@ -44,72 +44,67 @@
     </i-dialog>
     <i-dialog :dialog="itemDialog" @save="onItemSave">
       <i-form ref="itemFormRef" :form="itemForm">
-        <i-input v-model="itemForm.name" prop="name" label="名称" required/>
-        <i-input v-model="itemForm.label" prop="label" label="显示名" required/>
-        <i-input v-model="itemForm.style" prop="style" label="样式名" />
-        <i-input v-model="itemForm.remark" prop="remark" label="备注"/>
+        <i-input v-model="itemForm.data.name" prop="name" label="名称" required/>
+        <i-input v-model="itemForm.data.label" prop="label" label="显示名" required/>
+        <i-input v-model="itemForm.data.style" prop="style" label="样式名" />
+        <i-input v-model="itemForm.data.remark" prop="remark" label="备注"/>
       </i-form>
     </i-dialog>
   </section>
 </template>
 
 <script setup>
-import {ref} from "vue";
 import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
-import {allQuery, defDialog, defList, defQuery, handleDel, tempList} from "@/utils/page-utils";
+import {allQuery, defDialog, defForm, defList, defQuery, tempList} from "@/utils/page-utils";
 import sysDict from "@/api/sys/sys-dict.js";
 import sysDictItem from "@/api/sys/sys-dict-item.js";
 
-const dictFormRef = ref()
-
 const dictQuery = defQuery()
 const dictDialog = defDialog()
-const dictForm = ref(sysDict.new())
+const dictForm = defForm(sysDict.new())
 const dictList = defList(() => sysDict.list(dictQuery))
 const dictTotal = asyncRef(() => sysDict.total(), 0)
 
-const owners = asyncRef(sysDict.getByName("sys_owner"), {})
-
-const itemFormRef = ref()
-
 const itemQuery = allQuery()
 const itemDialog = defDialog()
-const itemForm = ref(sysDictItem.new())
+const itemForm = defForm(sysDictItem.new())
 const itemList = tempList(() => sysDictItem.list(itemQuery))
 
+const owners = asyncRef(sysDict.getByName("sys_owner"), {})
+
 function onDictAdd() {
+  dictForm.add(def => def.owner = sysDict.OWNER.USER)
   itemList.clear()
-  dictList.preAdd(dictForm,{owner: sysDict.OWNER.USER})
   dictDialog.open("新增字典")
 }
 
 function onDictEdit() {
-  dictList.preEdit(dictForm)
+  dictForm.edit(dictList.select)
   itemQuery.putWhere("dict","=",dictList.select.id)
   itemList.load()
   dictDialog.open("编辑字典")
 }
 
 async function onDictDel() {
-  await handleDel(sysDict.del(dictList.select.id))
-  reload()
+  dictList.del(sysDict.del,reload)
 }
 
 async function onSave() {
-  if (!await dictFormRef.value.validate()) return
+  if (!await dictForm.valid()) return
+  if (!itemList.valid("字典项")) return
   dictDialog.loading = true
-  await sysDict.put(dictForm.value)
+  await sysDict.putWithItems(dictForm.data,itemList.data)
   dictDialog.close()
   reload()
 }
 
 function onItemAdd() {
-  itemList.preAdd(itemForm, sysDictItem.new())
+  itemForm.add()
   itemDialog.open("新增字典项")
 }
 
 function onItemEdit() {
-  itemList.preEdit(itemForm)
+  itemForm.edit(itemList.select)
   itemDialog.open("编辑字典项")
 }
 
@@ -118,8 +113,8 @@ function onItemDel() {
 }
 
 async function onItemSave() {
-  if (!await itemFormRef.value.validate()) return
-  itemList.put(itemForm.value)
+  if (!await itemForm.valid()) return
+  itemList.put(itemForm.data,itemForm.isEdit())
   itemDialog.close()
 }
 

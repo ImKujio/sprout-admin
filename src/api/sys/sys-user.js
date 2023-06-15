@@ -18,8 +18,7 @@ export default {
      * @returns {SysUser}
      */
     new(def = null){
-        if (!def) return {}
-        else return Object.assign({},toRaw(def))
+        return {}
     },
     /**
      * 查询系统用户列表

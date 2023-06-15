@@ -1,7 +1,6 @@
 import request from "@/api/request.js";
 import {SyncLock} from "@/utils/async-utils";
 import {Query} from "@/utils/page-utils"
-import {toRaw} from "vue";
 
 /**
  * @typedef {Object} SysDict
@@ -28,8 +27,7 @@ export default {
      * @returns {SysDict}
      */
     new(def = null) {
-        if (!def) return {}
-        else return Object.assign({},toRaw(def))
+        return {}
     },
     /**
      * 查询系统字典列表
@@ -85,6 +83,18 @@ export default {
             url: '/sys/dict',
             method: 'put',
             data: data
+        })
+    },
+    /**
+     * 添加或修改系统字典,携带字典项
+     * @param {SysDict} data
+     * @param {SysDictItem[]} items
+     */
+    putWithItems(data,items) {
+        return request({
+            url: '/sys/dict/with-items',
+            method: 'put',
+            data: {data,items}
         })
     },
     /**

@@ -1,18 +1,18 @@
 <template>
-  <el-form ref="formRef" class="i-form" :style="style" :model="form" label-width="auto" :show-message="false">
+  <el-form ref="formRef" class="i-form" :style="style" :model="form.data" label-width="auto" :show-message="false">
     <slot></slot>
   </el-form>
 </template>
 
 <script setup>
-import {computed, ref} from "vue";
-import {ElMessage} from "element-plus";
+import {computed, nextTick, ref} from "vue";
+import {Form} from "@/utils/page-utils";
 
 const formRef = ref()
 const wSize = [320, 672, 1024]
 
 const props = defineProps({
-  form: {type: Object, required: true},
+  form: {type: Form, required: true},
   cols: {type: Number, default: 1},
 })
 
@@ -28,23 +28,8 @@ const style = computed(() => {
   }
 })
 
-async function validate() {
-  try {
-    const valid = await formRef.value.validate()
-    if (!valid) {
-      ElMessage.error('校验失败，请检查填写的数据！')
-      return false
-    } else {
-      return true
-    }
-  } catch (e) {
-    ElMessage.error('校验失败，请检查填写的数据！')
-    return false
-  }
-}
-
-defineExpose({
-  validate
+nextTick(() => {
+  props.form.setValid(formRef.value.validate)
 })
 </script>
 

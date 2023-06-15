@@ -34,8 +34,8 @@ function onOpen() {
 
 function onClose() {
   open.value = false
+  props.dialog.loading = false
 }
-
 </script>
 
 <style lang="scss">

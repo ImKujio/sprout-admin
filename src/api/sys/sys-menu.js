@@ -1,6 +1,5 @@
 import request from "@/api/request.js";
 import {Query} from "@/utils/page-utils"
-import {toRaw} from "vue";
 
 /**
  * 系统菜单接口
@@ -27,8 +26,7 @@ export default {
      * @returns {SysMenu}
      */
     new(def = null){
-        if (!def) return {}
-        else return Object.assign({},toRaw(def))
+        return {}
     },
     /**
      * 查询系统菜单列表
