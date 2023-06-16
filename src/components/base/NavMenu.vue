@@ -19,16 +19,15 @@
 
 <script setup>
 import FillContainer from "@/components/base/FillContainer.vue";
-import {map2Tree} from "@/utils/collection-utils";
-import sysMenu from "@/api/sys/sys-menu.js";
+import {list2Tree} from "@/utils/collection-utils";
 import NavMenuItem from "@/components/base/NavMenuItem.vue";
 import {computed} from "vue";
-import {useRouterStateStore} from "@/store.js";
+import {useNavMenuStore, useRouteStore} from "@/store.js";
 
-const sysMenus = await sysMenu.all(['pid', 'type', 'name', 'icon', 'path', 'component', 'sort'])
-const menuTree = map2Tree(sysMenus)
+const {menus} = useNavMenuStore()
+const menuTree = list2Tree(menus)
 
-const {path} = useRouterStateStore()
+const {path} = useRouteStore()
 
 const active = computed(() => {
   if (!path || path === "" || path === "/") return "/index"

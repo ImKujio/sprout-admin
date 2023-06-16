@@ -1,34 +1,45 @@
-import Index from '@/pages/Index.vue'
 import {createRouter, createWebHistory} from 'vue-router'
+import {useNavMenuStore, useRouteStore} from "@/store.js";
 import sysMenu from "@/api/sys/sys-menu.js";
-import {useRouterStateStore} from "@/store.js";
+import Index from '@/pages/base/Index.vue'
+import Main from "@/pages/base/Main.vue";
 
-const staticRoutes = [
+const routes = [
     {path: '', redirect: '/index'},
-    {path: '/index', component: Index}
+    {
+        path: '/index',
+        component: Main,
+        children: [
+            {name: 'index', path: '', component: Index}
+        ]
+    }
 ]
 
 const router = createRouter({
-    // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
     history: createWebHistory(),
-    routes: staticRoutes, // `routes: routes` 的缩写
+    routes: routes,
 })
 
+// const pages = import.meta.glob("./pages/**/*.vue", {eager: true, import: 'default'})
+let hasLoadMenu = false
 
 router.beforeEach(async (to, from, next) => {
-    const {updatePath,hasLoadMenu,menuLoaded} = useRouterStateStore()
-    updatePath(to.path)
+    useRouteStore().updatePath(to.path)
     if (!hasLoadMenu) {
-        const menus = await sysMenu.all(['type','path','component'])
-        for (let id in menus) {
-            const menu = menus[id]
+        const menus = await sysMenu.userMenus()
+        for (let menu of menus) {
             if (menu.type !== sysMenu.TYPE.ITEM) continue
-            router.addRoute({
+            // const page = pages[`./pages/${menu.component}.vue`]
+            // if (!page) continue
+            routes[1].children.push({
                 path: menu.path,
+                // component: page
                 component: () => import(`./pages/${menu.component}.vue`)
             })
         }
-        menuLoaded()
+        router.addRoute(routes[1])
+        useNavMenuStore().setMenus(menus)
+        hasLoadMenu = true
         return next({...to})
     }
     next()

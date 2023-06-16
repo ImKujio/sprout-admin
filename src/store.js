@@ -2,16 +2,23 @@ import {defineStore} from 'pinia'
 import {ref} from "vue";
 
 
-export const useRouterStateStore = defineStore('routerState', () => {
-    const pathData = ref("")
-    function updatePath(path) {
-        pathData.value = path
+export const useNavMenuStore = defineStore('navMenu',() => {
+    const menus = []
+    function setMenus(val){
+        menus.length = 0
+        menus.push(...val)
     }
-
-    const hasLoadMenu = ref(false)
-    function menuLoaded() {
-        hasLoadMenu.value = true
+    const current = ref(null)
+    function setCur(val){
+        current.value = val
     }
+    return {menus,current,setMenus,setCur}
+})
 
-    return {path: pathData, updatePath,hasLoadMenu,menuLoaded}
+export const useRouteStore = defineStore('routeState', () => {
+    const path = ref("")
+    function updatePath(val) {
+        path.value = val
+    }
+    return {path,updatePath}
 })

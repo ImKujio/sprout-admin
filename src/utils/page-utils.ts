@@ -108,14 +108,6 @@ export class TempList<T> extends List<T> {
             this.data = data
         }
     }
-
-    valid(name:string = null):boolean{
-        if (this.data.length === 0){
-            ElMessage.error(`校验失败！${!name ? '' : name}列表为空`)
-            return false
-        }
-        return true
-    }
 }
 
 export class Form<T> {

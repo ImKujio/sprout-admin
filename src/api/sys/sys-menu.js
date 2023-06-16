@@ -92,5 +92,15 @@ export default {
             url: '/sys/menu/' + id,
             method: 'delete'
         })
+    },
+    /**
+     * 获取当前登录用户的所有菜单项
+     * @returns {Promise<SysMenu[]>}
+     */
+    userMenus(){
+        return request({
+            url: '/sys/menu/user-menus',
+            method: 'get'
+        })
     }
 }

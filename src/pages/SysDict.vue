@@ -23,7 +23,7 @@
       <i-page :page="dictQuery.page" :total="dictTotal" @refresh="reload"/>
     </i-card>
     <i-dialog :dialog="dictDialog" @save="onSave">
-      <i-form ref="dictFormRef" :form="dictForm" :cols="3">
+      <i-form :form="dictForm" :cols="3">
         <i-input v-model="dictForm.data.name" prop="name" label="字典名" required/>
         <i-input v-model="dictForm.data.label" prop="label" label="显示名" required/>
         <i-input v-model="dictForm.data.remark" prop="remark" label="备注"/>
@@ -43,7 +43,7 @@
       </i-card>
     </i-dialog>
     <i-dialog :dialog="itemDialog" @save="onItemSave">
-      <i-form ref="itemFormRef" :form="itemForm">
+      <i-form :form="itemForm">
         <i-input v-model="itemForm.data.name" prop="name" label="名称" required/>
         <i-input v-model="itemForm.data.label" prop="label" label="显示名" required/>
         <i-input v-model="itemForm.data.style" prop="style" label="样式名" />
@@ -91,7 +91,6 @@ async function onDictDel() {
 
 async function onSave() {
   if (!await dictForm.valid()) return
-  if (!itemList.valid("字典项")) return
   dictDialog.loading = true
   await sysDict.putWithItems(dictForm.data,itemList.data)
   dictDialog.close()
