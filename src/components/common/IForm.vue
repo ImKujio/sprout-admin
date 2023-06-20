@@ -1,18 +1,17 @@
 <template>
-  <el-form ref="formRef" class="i-form" :style="style" :model="form.data" label-width="auto" :show-message="false">
+  <el-form ref="formRef" class="i-form" :style="style" :model="form.data" label-width="auto" label-position="left" :show-message="false">
     <slot></slot>
   </el-form>
 </template>
 
 <script setup>
 import {computed, nextTick, ref} from "vue";
-import {Form} from "@/utils/page-utils";
 
 const formRef = ref()
 const wSize = [320, 672, 1024]
 
 const props = defineProps({
-  form: {type: Form, required: true},
+  form: {type: Object, required: true},
   cols: {type: Number, default: 1},
 })
 

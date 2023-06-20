@@ -8,7 +8,7 @@ import 'virtual:svg-icons-register'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
 import ElementPlus from 'element-plus'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import SvgIcon from '@/components/base/SvgIcon.vue'
 
 import App from './App.vue'
@@ -43,7 +43,7 @@ const app = createApp(App)
 
 app.use(pinia)
 app.use(router)
-app.use(ElementPlus, {locale})
+app.use(ElementPlus, {locale:zhCn})
 
 app.component("ICard",ICard)
 app.component("ITable",ITable);

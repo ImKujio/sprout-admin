@@ -41,7 +41,7 @@ import {CountDownLatch} from "./async-utils";
  * @param  def 默认值
  * @param  promise 异步获取值的promise，或者是一个函数，函数返回一个promise
  */
-export function asyncRef<T>(promise: Promise<T> | (() => Promise<T>), def: T): ShallowRef<T> {
+export function asyncRef<T>(promise: Promise<T> | (() => Promise<T>), def: any): ShallowRef<T> {
     const data = shallowRef(def);
     // 如果是函数，那么就记录到reloadRefs中
     if (typeof promise === 'function') {

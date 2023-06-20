@@ -12,7 +12,7 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(config => {
-    config.headers['Authorization'] = 'Bearer ' + Cookies.get(TokenKey)
+    config.headers['Authorization'] = Cookies.get(TokenKey)
     if ((config.method === 'get' || config.method === 'del') && config.params) {
         config.url = config.url + '?' + encodeParams(config.params);
         config.params = {};
@@ -21,14 +21,22 @@ service.interceptors.request.use(config => {
 })
 
 service.interceptors.response.use(response => {
-    if (response.data.code === 200) return response.data.data
-    if (response.data.code === 401) {
-        ElMessage({message: '登录已过期，请重新登录', type: 'error'})
-        Cookies.remove(TokenKey)
-        location.href = '/index';
-        return Promise.reject()
+    if (response.data.code === 200) {
+        Cookies.set(TokenKey, response.headers['authorization'])
+        return response.data.data
     }
-    ElMessage({message: response.data.msg, type: 'error'})
+    if (response.data.code === 401) {
+        if (location.pathname !== '/login') {
+            if (!!Cookies.get(TokenKey)) {
+                Cookies.remove(TokenKey)
+                ElMessage({message: '登录已过期，请重新登录', type: 'error'})
+            }
+            location.href = "/login"
+        }
+    }
+    if (response.data.code === 403){
+        ElMessage({message: '您当前没有权限访问该数据', type: 'error'})
+    }
     return Promise.reject(response.data.msg)
 })
 

@@ -3,6 +3,7 @@ import {useNavMenuStore, useRouteStore} from "@/store.js";
 import sysMenu from "@/api/sys/sys-menu.js";
 import Index from '@/pages/base/Index.vue'
 import Main from "@/pages/base/Main.vue";
+import Login from "@/pages/base/Login.vue"
 
 const routes = [
     {path: '', redirect: '/index'},
@@ -12,7 +13,8 @@ const routes = [
         children: [
             {name: 'index', path: '', component: Index}
         ]
-    }
+    },
+    {path: '/login', component: Login}
 ]
 
 const router = createRouter({
@@ -25,7 +27,7 @@ let hasLoadMenu = false
 
 router.beforeEach(async (to, from, next) => {
     useRouteStore().updatePath(to.path)
-    if (!hasLoadMenu) {
+    if (!hasLoadMenu && !['/login'].includes(to.path)) {
         const menus = await sysMenu.userMenus()
         for (let menu of menus) {
             if (menu.type !== sysMenu.TYPE.ITEM) continue

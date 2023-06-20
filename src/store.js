@@ -22,3 +22,6 @@ export const useRouteStore = defineStore('routeState', () => {
     }
     return {path,updatePath}
 })
+
+export const useLoginUserStore = defineStore('loginUser',() => {
+})
