@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
 import {defDialog, defList, allQuery, defForm} from "@/utils/page-utils";
 import sysMenu from "@/api/sys/sys-menu.js";
@@ -47,7 +47,9 @@ const dialog = defDialog()
 const form = defForm(sysMenu.new())
 const list = defList(() => sysMenu.list(query))
 
+
 const types = asyncRef(sysDict.getByName("admin_menu_type"), {})
+
 
 const menus = computed(() => {
   const data = list.data.filter(i => i.type === sysMenu.TYPE.MENU)

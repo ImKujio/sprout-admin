@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import {ElMessage} from "element-plus";
+import router from "@/router.js";
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
@@ -31,7 +32,7 @@ service.interceptors.response.use(response => {
                 Cookies.remove(TokenKey)
                 ElMessage({message: '登录已过期，请重新登录', type: 'error'})
             }
-            location.href = "/login"
+            router.push("/login").then()
         }
     }
     if (response.data.code === 403){

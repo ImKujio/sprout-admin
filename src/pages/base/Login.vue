@@ -15,7 +15,7 @@
         </i-input>
       </i-form>
       <span v-show="error">{{ error }}</span>
-      <el-button style="margin-top: 8px" type="primary" :disabled="!canLogin" @click="onLogin">登 录</el-button>
+      <el-button style="margin-top: 16px" type="primary" :disabled="!canLogin" @click="onLogin">登 录</el-button>
     </i-card>
   </div>
   <login-bg/>
@@ -27,6 +27,7 @@ import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
 import {defForm} from "@/utils/page-utils";
 import sysLogin from "@/api/sys/sys-login.js";
 import LoginBg from "@/components/other/LoginBg.vue";
+import router from "@/router.js";
 
 const title = import.meta.env.VITE_APP_TITLE
 const captcha = asyncRef(() => sysLogin.captcha(), {})
@@ -47,7 +48,7 @@ async function onLogin() {
   form.data.key = captcha.value.key
   try {
     await sysLogin.login(form.data);
-    location.href = "/index"
+    router.push("/index").then()
   } catch (e) {
     error.value = e
     loading.value = false
