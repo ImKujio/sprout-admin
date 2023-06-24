@@ -1,5 +1,6 @@
 <template>
-  <el-form ref="formRef" class="i-form" :style="style" :model="form.data" label-width="auto" label-position="left" :show-message="false">
+  <el-form ref="formRef" class="i-form" :style="style" :model="form.data" label-width="auto" label-position="right"
+           :show-message="showMessage">
     <slot></slot>
   </el-form>
 </template>
@@ -13,6 +14,7 @@ const wSize = [320, 672, 1024]
 const props = defineProps({
   form: {type: Object, required: true},
   cols: {type: Number, default: 1},
+  showMessage: {type: Boolean, default: false}
 })
 
 const style = computed(() => {
@@ -38,7 +40,6 @@ nextTick(() => {
   grid-column-gap: 32px;
 
   .i-form-item {
-    margin-bottom: 0;
 
     .el-form-item__content {
       flex-direction: row;
@@ -50,7 +51,6 @@ nextTick(() => {
     }
 
     .i-form-input {
-      margin-bottom: 24px;
       flex: 1;
 
       .el-textarea__inner {
@@ -59,13 +59,6 @@ nextTick(() => {
 
     }
 
-    .i-form-tip {
-      position: absolute;
-      line-height: 1.6;
-      bottom: 3px;
-      left: 2px;
-      font-size: 13px;
-    }
   }
 }
 </style>

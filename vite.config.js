@@ -35,11 +35,11 @@ export default defineConfig(({mode, command}) => {
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
         },
         server: {
-            port: 81,
+            port: 80,
             host: true,
             proxy: {
                 '/dev': {
-                    target: 'http://localhost:8081',
+                    target: 'http://localhost:8080',
                     changeOrigin: true,
                     rewrite: (p) => p.replace(/^\/dev/, '')
                 }

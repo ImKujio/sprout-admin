@@ -2,10 +2,10 @@
   <fill-container width="220px">
     <el-scrollbar class="nav-menu-scroll">
       <el-menu
-        class="nav-menu"
-        :default-active="active"
-        unique-opened
-        router
+          class="nav-menu"
+          :default-active="active"
+          unique-opened
+          router
       >
         <el-menu-item index="/index">
           <svg-icon icon="home" class="menu-icon"/>
@@ -27,11 +27,12 @@ import {useNavMenuStore, useRouteStore} from "@/store.js";
 const {menus} = useNavMenuStore()
 const menuTree = list2Tree(menus)
 
-const {path} = useRouteStore()
+const route = useRouteStore()
 
 const active = computed(() => {
-  if (!path || path === "" || path === "/") return "/index"
-  return path
+  console.log(route.path)
+  if (!route.path || route.path === "" || route.path === "/") return "/index"
+  return route.path
 })
 </script>
 

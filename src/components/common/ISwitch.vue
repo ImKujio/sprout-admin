@@ -1,8 +1,7 @@
 <template>
   <el-col :span="span">
     <el-form-item class="i-form-item" :label="label" :prop="prop">
-      <el-switch class="i-form-input" v-model="value" :disabled="disabled" />
-      <div v-if="tip" class="i-form-tip">{{ tip }}</div>
+      <el-switch class="i-form-input" v-model="value" :disabled="disabled"/>
     </el-form-item>
   </el-col>
 </template>
@@ -17,9 +16,8 @@ const props = defineProps({
   prop: {type: String, default: null},
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
-  tip: {type: String, default: null},
 
-  default:{type:Boolean,default:false}
+  default: {type: Boolean, default: false}
 })
 
 const value = computed({

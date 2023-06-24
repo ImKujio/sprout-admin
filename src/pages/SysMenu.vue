@@ -12,7 +12,7 @@
         <el-table-column label="菜单">
           <template #default="{row}">
             <svg-icon style="margin-right: 4px" v-if="!!row.icon" :icon="row.icon"/>
-            <span>{{row.name}}</span>
+            <span>{{ row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="path" label="路径"/>
@@ -23,12 +23,14 @@
     <i-dialog :dialog="dialog" @save="onSave">
       <i-form :form="form">
         <i-radio v-model="form.data.type" prop="type" label="类型" :options="types"/>
-        <i-tree-select v-model="form.data.pid" prop="pid" label="上级菜单" :options="menus" label-key="name" sort="sort" required/>
+        <i-tree-select v-model="form.data.pid" prop="pid" label="上级菜单" :options="menus" label-key="name" sort="sort"
+                       required/>
         <i-input v-model="form.data.name" prop="name" label="菜单名" required/>
         <i-input v-model="form.data.icon" prop="icon" label="图标"/>
-        <i-input v-if="form.data.type === sysMenu.TYPE.ITEM" v-model="form.data.path" prop="path" label="路径" required/>
+        <i-input v-if="form.data.type === sysMenu.TYPE.ITEM" v-model="form.data.path" prop="path" label="路径"
+                 required/>
         <i-input v-if="form.data.type === sysMenu.TYPE.ITEM" v-model="form.data.component" prop="component" label="组件"
-                    required/>
+                 required tip="测试安顿好搜"/>
         <i-input v-model="form.data.sort" prop="sort" label="排序" number/>
       </i-form>
     </i-dialog>
@@ -36,9 +38,9 @@
 </template>
 
 <script setup>
-import {computed, ref} from "vue";
+import {computed} from "vue";
 import {asyncRef, loadAsyncRef} from "@/utils/vue-utils";
-import {defDialog, defList, allQuery, defForm} from "@/utils/page-utils";
+import {allQuery, defDialog, defForm, defList} from "@/utils/page-utils";
 import sysMenu from "@/api/sys/sys-menu.js";
 import sysDict from "@/api/sys/sys-dict.js";
 
@@ -53,7 +55,7 @@ const types = asyncRef(sysDict.getByName("admin_menu_type"), {})
 
 const menus = computed(() => {
   const data = list.data.filter(i => i.type === sysMenu.TYPE.MENU)
-  data.splice(0,0,sysMenu.new({id:0,pid:-1,name:"主目录"}))
+  data.splice(0, 0, sysMenu.new({id: 0, pid: -1, name: "主目录"}))
   return data
 })
 
@@ -68,7 +70,7 @@ function onEdit() {
 }
 
 function onDel() {
-  list.del(sysMenu.del,reload)
+  list.del(sysMenu.del, reload)
 }
 
 async function onSave() {

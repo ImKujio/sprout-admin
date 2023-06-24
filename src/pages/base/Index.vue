@@ -1,5 +1,5 @@
 <template>
-  <section class="page-container">
+  <section>
     首页
   </section>
 </template>

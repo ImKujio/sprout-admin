@@ -3,7 +3,6 @@
     <el-cascader class="i-form-input" v-model="value" :disabled="disabled" :options="optionsTree"
                  :show-all-levels="false" clearable
                  :props="{value:valueKey,label:labelKey,emitPath:false,checkStrictly: true}"/>
-    <div v-if="tip" class="i-form-tip">{{ tip }}</div>
   </el-form-item>
 </template>
 
@@ -19,7 +18,6 @@ const props = defineProps({
   prop: {type: String, default: null},
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
-  tip: {type: String, default: null},
   options: {type: [Object, Array], default: () => []},
   valueKey: {type: String, default: "id"},
   labelKey: {type: String, default: "label"}
@@ -30,13 +28,13 @@ const value = computed({
     return props.modelValue
   },
   set(val) {
-    console.log("select",val)
+    console.log("select", val)
     emits('update:modelValue', val)
   }
 })
 
 const optionsTree = computed(() => {
-  console.log("options",props.options)
+  console.log("options", props.options)
   if (props.options instanceof Array) {
     return list2Tree(props.options)
   } else {

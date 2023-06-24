@@ -1,6 +1,6 @@
 import {ElMessage, ElMessageBox} from "element-plus";
 import {asyncRef} from "./vue-utils";
-import {reactive, shallowReactive, ShallowReactive, toRaw, UnwrapNestedRefs, UnwrapRef, watch} from "vue";
+import {reactive, shallowReactive, ShallowReactive, toRaw, UnwrapNestedRefs, watch} from "vue";
 
 export class Dialog {
     isOpen: boolean = false
@@ -191,5 +191,3 @@ export function defDialog(): ShallowReactive<Dialog> {
     return shallowReactive(new Dialog())
 }
 
-export class handleDel {
-}

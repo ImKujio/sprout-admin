@@ -7,6 +7,7 @@ import {toRaw} from "vue";
  * @typedef {Object} SysUser
  * @property {string} name - 用户名
  * @property {string} nickName - 昵称
+ * @property {string} avatar - 头像
  * @property {string} createTime - 创建时间
  * @property {string} owner - 所属类型
  */
@@ -86,6 +87,16 @@ export default {
         return request({
             url: '/sys/user/'+id,
             method: 'delete'
+        })
+    },
+    /**
+     * 登录用户信息
+     * @returns {Promise<SysUser>}
+     */
+    loginUser(){
+        return request({
+            url: '/sys/user/login',
+            method: "get"
         })
     }
 }

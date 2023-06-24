@@ -1,5 +1,5 @@
 <template>
-  <el-form-item class="i-form-item" :label="label" :prop="prop" :required="required" :rules="rules">
+  <el-form-item class="i-form-item" :label="label" :prop="prop" :required="required" :rules="rules" :error="error">
     <el-input class="i-form-input" v-model="value" :placeholder="'请输入'+label" :maxlength="length"
               @blur="onblur" :disabled="disabled" clearable :type="textarea ? 'textarea' : 'text'"
               :show-password="password">
@@ -10,12 +10,10 @@
         <slot name="append"/>
       </template>
     </el-input>
-    <div v-if="tip" class="i-form-tip">{{ tip }}</div>
   </el-form-item>
 </template>
 <script setup>
-import {computed} from "vue";
-import {useSlots} from "vue";
+import {computed, useSlots} from "vue";
 
 const slotPrepend = !!useSlots().prepend
 const slotAppend = !!useSlots().append
@@ -28,8 +26,8 @@ const props = defineProps({
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
   length: {type: Number, default: null},
-  tip: {type: String, default: null},
   rules: {type: Object, default: []},
+  error: {type: [String, null], default: null},
 
   password: {type: Boolean, default: false},
 

@@ -1,6 +1,6 @@
 <template>
   <svg class="svg-icon" aria-hidden="true">
-    <use :xlink:href="iconName" :fill="color" />
+    <use :xlink:href="iconName" :fill="color"/>
   </svg>
 </template>
 
@@ -23,7 +23,7 @@ const iconName = computed(() => {
 })
 </script>
 
-<style>
+<style lang="scss">
 
 .svg-icon {
   width: 1em;

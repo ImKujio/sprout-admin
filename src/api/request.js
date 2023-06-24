@@ -5,7 +5,7 @@ import router from "@/router.js";
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
-const TokenKey = 'Admin-Token'
+const TokenKey = 'Sprout-Token'
 
 const service = axios.create({
     baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -35,7 +35,7 @@ service.interceptors.response.use(response => {
             router.push("/login").then()
         }
     }
-    if (response.data.code === 403){
+    if (response.data.code === 403) {
         ElMessage({message: '您当前没有权限访问该数据', type: 'error'})
     }
     return Promise.reject(response.data.msg)

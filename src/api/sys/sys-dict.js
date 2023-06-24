@@ -133,12 +133,14 @@ export default {
                         resolve(!!dict ? dict : {})
                     }).catch(() => {
                         resolve({})
+                    }).finally(() => {
+                        getByNameLock.unlock()
                     })
                 } else {
                     const dict = this.allDictData[name]
                     resolve(!!dict ? dict : {})
+                    getByNameLock.unlock()
                 }
-                getByNameLock.unlock()
             })
         })
     }

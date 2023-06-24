@@ -14,7 +14,7 @@
         <el-table-column prop="remark" label="备注"/>
         <el-table-column label="所属类型">
           <template #default="{row}">
-            <span>{{ owners[row.owner].label }}</span>
+            <span>{{ owners[row.owner] && owners[row.owner].label }}</span>
           </template>
         </el-table-column>
       </i-table>

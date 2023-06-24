@@ -17,7 +17,6 @@ const props = defineProps({
   prop: {type: String, default: null},
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
-  tip: {type: String, default: null},
 })
 
 const value = computed({

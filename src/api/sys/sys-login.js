@@ -18,15 +18,15 @@ export default {
     /**
      * @returns {LoginInfo}
      */
-    new(){
+    new() {
         return {}
     },
     /**
      * 登录
      * @param {LoginInfo} data
-     * @returns {Promise<boolean>}
+     * @returns {Promise<void>}
      */
-    login(data){
+    login(data) {
         return request({
             url: '/login',
             method: 'post',
@@ -37,10 +37,31 @@ export default {
      * 验证码
      * @returns {Promise<Captcha>}
      */
-    captcha(){
+    captcha() {
         return request({
-            url: '/login/captcha',
+            url: '/captcha',
             method: 'get',
+        })
+    },
+    /**
+     * 退出登录
+     * @returns {Promise<void>}
+     */
+    logout() {
+        return request({
+            url: '/user-logout',
+            method: 'post',
+            data: {}
+        })
+    },
+    /**
+     * 获取当前是否登录
+     * @returns {Promise<boolean>}
+     */
+    isLogin() {
+        return request({
+            url: '/is-login',
+            method: "get"
         })
     }
 }

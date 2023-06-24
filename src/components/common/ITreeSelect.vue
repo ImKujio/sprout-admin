@@ -3,7 +3,6 @@
     <el-tree-select class="i-form-input" v-model="value" :disabled="disabled" :data="optionsTree"
                     :show-all-levels="false" check-strictly clearable
                     :props="{value:valueKey,label:labelKey,emitPath:false}"/>
-    <div v-if="tip" class="i-form-tip">{{ tip }}</div>
   </el-form-item>
 </template>
 
@@ -20,7 +19,6 @@ const props = defineProps({
   prop: {type: String, default: null},
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
-  tip: {type: String, default: null},
   options: {type: [Object, Array], default: () => []},
   valueKey: {type: String, default: "id"},
   labelKey: {type: String, default: "label"},
@@ -40,11 +38,11 @@ const value = computed({
 const optionsTree = computed(() => {
   if (props.options instanceof Array) {
     const tree = list2Tree(props.options)
-    if (!!props.sort) sortTree(tree,props.sort)
+    if (!!props.sort) sortTree(tree, props.sort)
     return tree
   } else {
     const tree = map2Tree(props.options)
-    if (!!props.sort) sortTree(tree,props.sort)
+    if (!!props.sort) sortTree(tree, props.sort)
     return tree
   }
 })

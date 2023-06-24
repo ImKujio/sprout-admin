@@ -2,14 +2,13 @@
   <el-form-item class="i-form-item" :label="label" :prop="prop" :required="required">
     <el-radio-group class="i-form-input" v-model="value" :disabled="disabled">
       <el-radio
-        v-for="(item,index) in options"
-        :key="index"
-        :label="Number.parseInt(item[valueKey])"
+          v-for="(item,index) in options"
+          :key="index"
+          :label="Number.parseInt(item[valueKey])"
       >
         {{ item[labelKey] }}
       </el-radio>
     </el-radio-group>
-    <div v-if="tip" class="i-form-tip">{{ tip }}</div>
   </el-form-item>
 </template>
 <script setup>
@@ -22,11 +21,7 @@ const props = defineProps({
   prop: {type: String, default: null},
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
-  tip: {type: String, default: null},
-  options: {
-    type: Object, default: () => {
-    }
-  },
+  options: {type: Object, required: true},
   valueKey: {type: String, default: "id"},
   labelKey: {type: String, default: "label"}
 })

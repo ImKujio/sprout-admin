@@ -3,7 +3,6 @@
     <el-form-item class="i-form-item" :label="label" :prop="prop" :required="required">
       <el-date-picker class="i-form-input" v-model="value" :placeholder="'请选择'+label"
                       value-format="YYYY-MM-DD" :disabled="disabled" clearable/>
-      <div v-if="tip" class="i-form-tip">{{ tip }}</div>
     </el-form-item>
   </el-col>
 </template>
@@ -18,7 +17,6 @@ const props = defineProps({
   prop: {type: String, default: null},
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
-  tip: {type: String, default: null},
 })
 
 const value = computed({
