@@ -16,8 +16,8 @@
 const emits = defineEmits(["refresh"])
 
 const props = defineProps({
-  filter:{type:Boolean,default:true},
-  refresh:{type:Boolean,default:true}
+  filter: {type: Boolean, default: true},
+  refresh: {type: Boolean, default: true}
 })
 
 function onRefresh() {
@@ -27,13 +27,15 @@ function onRefresh() {
 </script>
 
 <style lang="scss">
-.operate-bar{
+.operate-bar {
   display: flex;
   flex-direction: row;
   margin-left: 0 !important;
   margin-right: 0 !important;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
-  .el-button{
+  .el-button {
     padding: 8px 10px;
   }
 }

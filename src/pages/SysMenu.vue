@@ -1,6 +1,6 @@
 <template>
   <section>
-    <i-card padding="10px 16px">
+    <i-card padding="0 16px">
       <operate-bar :filter="false" @refresh="reload">
         <operate-item type="primary" icon="add" label="新增" @click="onAdd"/>
         <operate-item type="success" icon="edit" label="编辑" :disabled="!list.select" @click="onEdit"/>

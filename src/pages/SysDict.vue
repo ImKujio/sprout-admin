@@ -1,6 +1,6 @@
 <template>
   <section>
-    <i-card padding="10px 16px">
+    <i-card padding="0 16px">
       <operate-bar @refresh="reload">
         <operate-item type="primary" icon="add" label="新增" @click="onDictAdd"/>
         <operate-item type="success" icon="edit" label="编辑" :disabled="!dictList.select" @click="onDictEdit"/>
@@ -46,7 +46,7 @@
       <i-form :form="itemForm">
         <i-input v-model="itemForm.data.name" prop="name" label="名称" required/>
         <i-input v-model="itemForm.data.label" prop="label" label="显示名" required/>
-        <i-input v-model="itemForm.data.style" prop="style" label="样式名" />
+        <i-input v-model="itemForm.data.style" prop="style" label="样式名"/>
         <i-input v-model="itemForm.data.remark" prop="remark" label="备注"/>
       </i-form>
     </i-dialog>
@@ -80,19 +80,19 @@ function onDictAdd() {
 
 function onDictEdit() {
   dictForm.edit(dictList.select)
-  itemQuery.putWhere("dict","=",dictList.select.id)
+  itemQuery.putWhere("dict", "=", dictList.select.id)
   itemList.load()
   dictDialog.open("编辑字典")
 }
 
 async function onDictDel() {
-  dictList.del(sysDict.del,reload)
+  dictList.del(sysDict.del, reload)
 }
 
 async function onSave() {
   if (!await dictForm.valid()) return
   dictDialog.loading = true
-  await sysDict.putWithItems(dictForm.data,itemList.data)
+  await sysDict.putWithItems(dictForm.data, itemList.data)
   dictDialog.close()
   reload()
 }
@@ -113,7 +113,7 @@ function onItemDel() {
 
 async function onItemSave() {
   if (!await itemForm.valid()) return
-  itemList.put(itemForm.data,itemForm.isEdit())
+  itemList.put(itemForm.data, itemForm.isEdit())
   itemDialog.close()
 }
 

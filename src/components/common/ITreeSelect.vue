@@ -37,12 +37,15 @@ const value = computed({
 
 const optionsTree = computed(() => {
   if (props.options instanceof Array) {
+    console.log(props.options);
     const tree = list2Tree(props.options)
     if (!!props.sort) sortTree(tree, props.sort)
+    console.log(tree);
     return tree
   } else {
     const tree = map2Tree(props.options)
     if (!!props.sort) sortTree(tree, props.sort)
+    console.log(tree);
     return tree
   }
 })

@@ -1,12 +1,12 @@
 <template>
   <el-form-item class="i-form-item" :label="label" :prop="prop" :required="required">
-    <el-date-picker class="i-form-input" v-model="value" :placeholder="'请选择'+label"
-                    :type="datetime?'datetime':'date'"
-                    :value-format="datetime?'YYYY-MM-DD HH:mm:ss':'YYYY-MM-DD'" :disabled="disabled" clearable/>
+    <el-time-picker class="i-form-input" v-model="value" :placeholder="'请选择'+label"
+                    :disabled="disabled" clearable/>
   </el-form-item>
 </template>
 <script setup>
 import {computed} from "vue";
+import {date2Hms, hms2Date} from "@/utils/time-utils.js";
 
 const emits = defineEmits(["update:modelValue"])
 const props = defineProps({
@@ -15,15 +15,16 @@ const props = defineProps({
   prop: {type: String, default: null},
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
-  datetime: {type: Boolean, default: false}
 })
 
 const value = computed({
   get() {
-    return props.modelValue
+    if (props.modelValue == null) return null
+    return hms2Date(props.modelValue)
   },
   set(val) {
-    emits('update:modelValue', val)
+    if (val == null) emits('update:modelValue', val)
+    else emits('update:modelValue', date2Hms(val))
   }
 })
 </script>

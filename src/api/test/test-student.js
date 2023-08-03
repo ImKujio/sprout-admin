@@ -1,41 +1,35 @@
 import request from "@/api/request.js";
-import {Query} from "@/utils/page-utils"
 
 /**
  * 系统菜单接口
- * @typedef {Object} SysMenu
+ * @typedef {Object} TestStudent
  * @property {number} id - 编号
- * @property {number} pid - 父编号
- * @property {number} type - 类型
- * @property {string} name - 菜单名
- * @property {string} icon - 图标
- * @property {string} path - 路径
- * @property {string} component - 组件
- * @property {number} sort - 排序
+ * @property {string} name - 姓名
+ * @property {number} age - 年龄
+ * @property {boolean} stay - 是否在校
+ * @property {number} score - 成绩
+ * @property {string} birthday - 生日
+ * @property {string} schoolDismissalTime - 放学时间
+ * @property {string} registrationTime - 注册时间
  */
 
-
 export default {
-    TYPE: {
-        MENU: 3,
-        ITEM: 4,
-    },
     /**
      * 获取新的对象
      * @param {Object} def
-     * @returns {SysMenu}
+     * @returns {TestStudent}
      */
-    new(def = null) {
+    new(def = {}) {
         return def
     },
     /**
      * 查询系统菜单列表
      * @param {Query} query
-     * @returns {Promise<SysMenu[]>}
+     * @returns {Promise<TestStudent[]>}
      */
     list(query) {
         return request({
-            url: '/sys/menu/list',
+            url: '/test/student/list',
             method: 'get',
             params: query
         })
@@ -46,39 +40,39 @@ export default {
      */
     total() {
         return request({
-            url: '/sys/menu/total',
+            url: '/test/student/total',
             method: 'get'
         })
     },
     /**
      * 查询系统菜单详情
      * @param {number} id
-     * @returns {Promise<SysMenu>}
+     * @returns {Promise<TestStudent>}
      */
     get(id) {
         return request({
-            url: '/sys/menu/' + id,
+            url: '/test/student' + id,
             method: 'get'
         })
     },
     /**
      * 按字段查询所有系统菜单
-     * @returns {Promise<Object.<number,SysMenu>>}
+     * @returns {Promise<Object.<number,TestStudent>>}
      */
     all(fields) {
         return request({
-            url: '/sys/menu/all',
+            url: '/test/student/all',
             method: 'get',
             params: {fields}
         })
     },
     /**
      * 添加或修改系统菜单
-     * @param {SysMenu} data
+     * @param {TestStudent} data
      */
     put(data) {
         return request({
-            url: '/sys/menu',
+            url: '/test/student',
             method: 'put',
             data: data
         })
@@ -89,18 +83,8 @@ export default {
      */
     del(id) {
         return request({
-            url: '/sys/menu/' + id,
+            url: '/test/student/' + id,
             method: 'delete'
-        })
-    },
-    /**
-     * 获取当前登录用户的所有菜单项
-     * @returns {Promise<SysMenu[]>}
-     */
-    userMenus() {
-        return request({
-            url: '/sys/menu/user-menus',
-            method: 'get'
         })
     }
 }

@@ -20,7 +20,6 @@ const slotAppend = !!useSlots().append
 const emits = defineEmits(["update:modelValue"])
 const props = defineProps({
   modelValue: {type: [String, Number], default: null},
-  span: {type: Number, default: 5},
   label: {type: String, default: null},
   prop: {type: String, default: null},
   disabled: {type: Boolean, default: false},

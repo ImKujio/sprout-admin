@@ -35,6 +35,7 @@ export default {
      * @returns {Promise<SysDict[]>}
      */
     list(query) {
+        console.log(query);
         return request({
             url: '/sys/dict/list',
             method: 'get',
@@ -90,11 +91,11 @@ export default {
      * @param {SysDict} data
      * @param {SysDictItem[]} items
      */
-    putWithItems(data,items) {
+    putWithItems(data, items) {
         return request({
             url: '/sys/dict/with-items',
             method: 'put',
-            data: {data,items}
+            data: {data, items}
         })
     },
     /**
