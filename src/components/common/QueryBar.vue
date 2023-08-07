@@ -1,46 +1,43 @@
 <template>
-  <el-form class="query-bar" :model="modelValue" label-width="auto">
+  <div class="query-bar">
     <slot></slot>
-    <span style="margin-bottom: 8px;">
-    <el-button type="primary" plain @click="load">查询</el-button>
-    <el-button v-if="reset" plain @click="reset">重置</el-button>
-    </span>
-  </el-form>
+    <div style="flex: 1"/>
+    <el-button v-if="reset" plain>
+      <svg-icon icon="refresh" class="el-icon"/>
+      <span>重置</span>
+    </el-button>
+    <el-button v-if="query" plain @click="onQuery">
+      <svg-icon icon="refresh" class="el-icon"/>
+      <span>搜索</span>
+    </el-button>
+  </div>
 </template>
 
 <script setup>
+const emits = defineEmits(["query"])
 
 const props = defineProps({
-  modelValue: {type: Object, default: {}},
+  query: {type: Boolean, default: true},
   reset: {type: Boolean, default: true}
 })
 
-const emits = defineEmits(["load", "update:modelValue"])
-
-const defValue = Object.assign({}, props.modelValue)
-
-function load() {
-  emits("load")
-}
-
-function reset() {
-  emits("update:modelValue", defValue)
-  load()
+function onQuery() {
+  emits("query")
 }
 
 </script>
 
-<style>
-.query-bar{
-  display: flex; /* 将容器设置为Flex布局 */
-  flex-wrap: wrap; /* 允许自动换行 */
-  justify-content: flex-start; /* 水平方向从左开始排列 */
-  padding-top: 8px;
-  padding-left: 16px;
-  padding-right: 8px;
-}
-.query-item{
-  margin-bottom: 8px;
-  margin-right: 24px;
+<style lang="scss">
+.query-bar {
+  display: flex;
+  flex-direction: row;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  .el-button {
+    padding: 8px 10px;
+  }
 }
 </style>

@@ -1,6 +1,5 @@
 import request from "../request.js";
 import {Query} from "@/utils/page-utils"
-import {toRaw} from "vue";
 
 /**
  * 系统用户
@@ -18,15 +17,15 @@ export default {
      * @param {Object} def
      * @returns {SysUser}
      */
-    new(def = null){
-        return {}
+    new(def = {}) {
+        return def
     },
     /**
      * 查询系统用户列表
      * @param {Query} query
      * @returns {Promise<SysUser[]>}
      */
-    list(query){
+    list(query) {
         return request({
             url: '/sys/user/list',
             method: 'get',
@@ -37,7 +36,7 @@ export default {
      * 查询系统用户总数量
      * @returns {number}
      */
-    total(){
+    total() {
         return request({
             url: '/sys/user/total',
             method: 'get'
@@ -48,9 +47,9 @@ export default {
      * @param {number} id
      * @returns {Promise<SysUser>}
      */
-    get(id){
+    get(id) {
         return request({
-            url: '/sys/user/'+id,
+            url: '/sys/user/' + id,
             method: 'get'
         })
     },
@@ -59,7 +58,7 @@ export default {
      * @param {string[]} fields
      * @returns {Promise<Object.<number,SysUser>>}
      */
-    all(fields){
+    all(fields) {
         return request({
             url: '/sys/user/all',
             method: 'get',
@@ -71,7 +70,7 @@ export default {
      * @param {SysUser} data
      * @returns {Promise<void>}
      */
-    put(data){
+    put(data) {
         return request({
             url: '/sys/user',
             method: 'put',
@@ -83,9 +82,9 @@ export default {
      * @param {number} id
      * @returns {Promise<void>}
      */
-    del(id){
+    del(id) {
         return request({
-            url: '/sys/user/'+id,
+            url: '/sys/user/' + id,
             method: 'delete'
         })
     },
@@ -93,7 +92,7 @@ export default {
      * 登录用户信息
      * @returns {Promise<SysUser>}
      */
-    loginUser(){
+    loginUser() {
         return request({
             url: '/sys/user/login',
             method: "get"

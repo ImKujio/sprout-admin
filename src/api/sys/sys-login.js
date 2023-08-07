@@ -18,8 +18,8 @@ export default {
     /**
      * @returns {LoginInfo}
      */
-    new() {
-        return {}
+    new(def = {}) {
+        return def
     },
     /**
      * 登录

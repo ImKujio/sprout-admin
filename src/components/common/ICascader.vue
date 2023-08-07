@@ -8,7 +8,7 @@
 
 <script setup>
 import {computed} from "vue";
-import {list2Tree, map2Tree} from "@/utils/collection-utils.js";
+import {list2Tree, map2Tree, sortTree} from "@/utils/collection-utils.js";
 
 const emits = defineEmits(["update:modelValue"])
 
@@ -20,7 +20,8 @@ const props = defineProps({
   required: {type: Boolean, default: false},
   options: {type: [Object, Array], default: () => []},
   valueKey: {type: String, default: "id"},
-  labelKey: {type: String, default: "label"}
+  labelKey: {type: String, default: "label"},
+  sort: {type: String, default: null}
 })
 
 const value = computed({
@@ -28,17 +29,19 @@ const value = computed({
     return props.modelValue
   },
   set(val) {
-    console.log("select", val)
     emits('update:modelValue', val)
   }
 })
 
 const optionsTree = computed(() => {
-  console.log("options", props.options)
   if (props.options instanceof Array) {
-    return list2Tree(props.options)
+    const tree = list2Tree(props.options)
+    if (!!props.sort) sortTree(tree, props.sort)
+    return tree
   } else {
-    return map2Tree(props.options)
+    const tree = map2Tree(props.options)
+    if (!!props.sort) sortTree(tree, props.sort)
+    return tree
   }
 })
 </script>

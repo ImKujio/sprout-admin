@@ -17,8 +17,8 @@ export default {
      * @param {Object} def
      * @returns {SysDictItem}
      */
-    new(def = null){
-        return {}
+    new(def = {}) {
+        return def
     },
     /**
      * 查询系统字典项列表

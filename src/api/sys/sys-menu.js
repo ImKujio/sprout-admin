@@ -25,7 +25,7 @@ export default {
      * @param {Object} def
      * @returns {SysMenu}
      */
-    new(def = null) {
+    new(def = {}) {
         return def
     },
     /**

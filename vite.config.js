@@ -7,17 +7,17 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig(({mode, command}) => {
     const env = loadEnv(mode, process.cwd(), '')
-    const { VITE_APP_ENV } = env
+    const {VITE_APP_ENV} = env
     return {
-        root:'./',
+        root: './',
         base: VITE_APP_ENV === 'production' ? '/' : '/',
         plugins: [
             vue(),
             autoImport({
                 imports: [
                     'vue',
-                    ],
-                dts:false
+                ],
+                dts: false
             }),
             createSvgIconsPlugin({
                 iconDirs: [path.resolve(process.cwd(), 'src/assets/svg')],
@@ -35,16 +35,16 @@ export default defineConfig(({mode, command}) => {
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
         },
         server: {
-            port: 81,
+            port: 80,
             host: true,
             proxy: {
                 '/dev': {
-                    target: 'http://localhost:8081',
+                    target: 'http://localhost:8080',
                     changeOrigin: true,
                     rewrite: (p) => p.replace(/^\/dev/, '')
                 }
             },
-            headers:{
+            headers: {
                 'Keep-Alive': 'timeout=60, max=1000',
             }
         },

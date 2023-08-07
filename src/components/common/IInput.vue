@@ -69,7 +69,7 @@ const value = computed({
 
 function onblur() {
   if (props.decimal) {
-    let dec = findFloat(props.modelValue)
+    let dec = findFloat(props.modelValue + "")
     dec = parseFloat(dec)
     emits('update:modelValue', isNaN(dec) || dec == null ? null : dec)
   }
