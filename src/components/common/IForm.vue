@@ -7,12 +7,13 @@
 
 <script setup>
 import {computed, nextTick, ref} from "vue";
+import {Form} from "@/utils/page-utils";
 
 const formRef = ref()
 const wSize = [320, 672, 1024]
 
 const props = defineProps({
-  form: {type: Object, required: true},
+  form: {type: Form, required: true},
   cols: {type: Number, default: 1},
   showMessage: {type: Boolean, default: false}
 })

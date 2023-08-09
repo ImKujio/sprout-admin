@@ -3,12 +3,12 @@
  * @param {Object.<number,?>} map
  * @param {boolean} copy 复制模式
  */
-export function map2Tree(map,copy = true) {
-    if (copy){
+export function map2Tree(map, copy = true) {
+    if (copy) {
         const raw = map
         map = {}
         Object.values(raw).forEach(item => {
-            map[item.id] = Object.assign({},item)
+            map[item.id] = Object.assign({}, item)
         })
     }
     const tree = []
@@ -33,9 +33,9 @@ export function map2Tree(map,copy = true) {
 export function list2Tree(list) {
     const map = {}
     list.forEach(item => {
-        map[item.id] = Object.assign({},item)
+        map[item.id] = Object.assign({}, item)
     })
-    return map2Tree(map,false)
+    return map2Tree(map, false)
 }
 
 /**
@@ -57,5 +57,31 @@ export function sortTree(tree, field, order = 'asc') {
         if (!!node.children && node.children.length > 0) {
             sortTree(node.children, field, order);
         }
+    });
+}
+
+/**
+ * 排序array
+ * @param array
+ * @param {String} field 排序字段
+ * @param {String} order 正序/倒序
+ */
+export function sortArray(array, field, order = 'asc') {
+    const sortOrder = order === 'asc' ? 1 : -1;
+    array.sort((a, b) => {
+        const aValue = a[field];
+        const bValue = b[field];
+
+        if (typeof aValue === 'undefined' || typeof bValue === 'undefined') {
+            throw new Error(`Field '${field}' not found in one or more array elements`);
+        }
+
+        if (aValue < bValue) {
+            return -1 * sortOrder;
+        }
+        if (aValue > bValue) {
+            return sortOrder;
+        }
+        return 0;
     });
 }

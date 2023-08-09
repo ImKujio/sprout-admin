@@ -49,7 +49,6 @@ const dialog = defDialog()
 const form = defForm(sysMenu.new())
 const list = defList(() => sysMenu.list(query))
 
-
 const types = asyncRef(sysDict.getByName("admin_menu_type"), {})
 
 

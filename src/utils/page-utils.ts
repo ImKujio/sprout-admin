@@ -18,6 +18,8 @@ export class Dialog {
     }
 }
 
+export const ValueSeparator = "┆"
+
 export class Where {
     type: string
     value: number | string | boolean
@@ -37,9 +39,31 @@ export class Query {
     where: Record<string, Where> = {}
     order: Record<string, string> = {}
     page: Page = new Page()
+    visible: Boolean = false
 
     putWhere(field, type, value) {
-        this.where[field] = new Where(type, value)
+        this.where[field] = value == null || value === '' ? null : new Where(type, value)
+    }
+
+    whereVal(field): null | string | number | boolean {
+        const w = this.where[field]
+        return !!w ? w.value : null
+    }
+
+    resetWhere() {
+        this.where = {}
+    }
+
+    resetOrder() {
+        this.order = {}
+    }
+
+    resetPage() {
+        this.page.page = 1
+    }
+
+    toggle() {
+        this.visible = !this.visible
     }
 }
 
@@ -159,7 +183,7 @@ export class Form<T> {
     }
 }
 
-export function defForm<T>(raw: T) {
+export function defForm<T>(raw: T): UnwrapNestedRefs<Form<T>> {
     return reactive(new Form(raw))
 }
 

@@ -5,6 +5,7 @@ import request from "@/api/request.js";
  * @typedef {Object} TestStudent
  * @property {number} id - 编号
  * @property {string} name - 姓名
+ * @property {number} sex - 性别
  * @property {number} age - 年龄
  * @property {boolean} stay - 是否在校
  * @property {number} score - 成绩
