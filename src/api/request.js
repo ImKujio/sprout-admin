@@ -7,10 +7,23 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
 const TokenKey = 'Sprout-Token'
 
+export const BASE_API_URL = import.meta.env.VITE_APP_BASE_API
+export const REQUEST_TIMEOUT = 10 * 1000
+
+
 const service = axios.create({
-    baseURL: import.meta.env.VITE_APP_BASE_API,
-    timeout: 10000
+    baseURL: BASE_API_URL,
+    timeout: REQUEST_TIMEOUT
 })
+
+
+service.constant = {
+    baseURL: import.meta.env.VITE_APP_BASE_API,
+    timeout: 10 * 1000,
+    headers() {
+        return Cookies.get(TokenKey)
+    }
+}
 
 service.interceptors.request.use(config => {
     config.headers['Authorization'] = Cookies.get(TokenKey)

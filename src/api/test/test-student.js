@@ -5,6 +5,7 @@ import request from "@/api/request.js";
  * @typedef {Object} TestStudent
  * @property {number} id - 编号
  * @property {string} name - 姓名
+ * @property {string} avatar - 头像
  * @property {number} sex - 性别
  * @property {number} age - 年龄
  * @property {boolean} stay - 是否在校
@@ -86,6 +87,18 @@ export default {
         return request({
             url: '/test/student/' + id,
             method: 'delete'
+        })
+    },
+    uploadAvatar(file) {
+        const form = new FormData()
+        form.append("file", file)
+        return request({
+            url: '/test/student/upload-avatar',
+            method: 'post',
+            data: form,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         })
     }
 }

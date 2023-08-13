@@ -33,6 +33,7 @@
     <i-dialog :dialog="dialog" @save="onSave">
       <i-form :form="form">
         <i-input v-model="form.data.name" prop="name" label="姓名" required/>
+        <i-image-cropper v-model="form.data.avatar" prop="avatar" label="头像" :action="testStudent.uploadAvatar"/>
         <i-input v-model="form.data.age" prop="age" label="年龄" number/>
         <i-select v-model="form.data.sex" prop="sex" label="性别" :options="sex"/>
         <i-switch v-model="form.data.stay" prop="stay" label="是否在校"/>
@@ -58,6 +59,7 @@ import ISelect from "@/components/common/ISelect.vue";
 import QueryBar from "@/components/common/QueryBar.vue";
 import QInput from "@/components/common/QInput.vue";
 import QSelect from "@/components/common/QSelect.vue";
+import IImageCropper from "@/components/common/IImageCropper.vue";
 
 const query = defQuery()
 const dialog = defDialog()

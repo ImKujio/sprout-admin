@@ -19,7 +19,7 @@
 
 <script setup>
 import {Query} from "@/utils/page-utils";
-import {onMounted, onUnmounted, reactive, ref} from "vue";
+import {onBeforeUnmount, onMounted, reactive, ref} from "vue";
 
 const emits = defineEmits(["query"])
 
@@ -54,7 +54,7 @@ onMounted(() => {
   resizeObserver.observe(formRef.value)
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   resizeObserver.unobserve(formRef.value)
 })
 
