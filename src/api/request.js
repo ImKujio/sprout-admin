@@ -2,6 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import {ElMessage} from "element-plus";
 import router from "@/router.js";
+import {SyncLock} from "@/utils/async-utils";
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 

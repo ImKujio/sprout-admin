@@ -70,11 +70,11 @@ export default {
      * @param {string} old
      * @param {string} fresh
      */
-    changePassword(old,fresh){
+    changePassword(old, fresh) {
         return request({
-            url:'/change-password',
+            url: '/change-password',
             method: "post",
-            data: {old,fresh}
+            data: {old, fresh}
         })
     },
 
@@ -96,7 +96,7 @@ export default {
      */
     loginInfo() {
         return request({
-            url: '/sys-user/login-info',
+            url: '/login-info',
             method: "get"
         })
     },

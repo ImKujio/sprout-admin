@@ -35,7 +35,6 @@ export default {
      * @returns {Promise<SysDict[]>}
      */
     list(query) {
-        console.log(query);
         return request({
             url: '/sys-dict/list',
             method: 'get',

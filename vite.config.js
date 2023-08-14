@@ -39,7 +39,7 @@ export default defineConfig(({mode, command}) => {
             host: true,
             proxy: {
                 '/dev': {
-                    target: 'http://localhost:8080',
+                    target: 'http://localhost:8081',
                     changeOrigin: true,
                     rewrite: (p) => p.replace(/^\/dev/, '')
                 }

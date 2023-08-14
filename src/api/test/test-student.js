@@ -37,13 +37,15 @@ export default {
         })
     },
     /**
-     * 查询系统菜单总数量
+     * 查询系统菜单数量
+     * @param {Query} query
      * @returns {Promise<number>}
      */
-    total() {
+    count(query) {
         return request({
-            url: '/test-student/total',
-            method: 'get'
+            url: '/test-student/count',
+            method: 'get',
+            params: query
         })
     },
     /**

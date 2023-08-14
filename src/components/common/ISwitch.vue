@@ -1,9 +1,7 @@
 <template>
-  <el-col :span="span">
-    <el-form-item class="i-form-item" :label="label" :prop="prop">
-      <el-switch class="i-form-input" v-model="value" :disabled="disabled"/>
-    </el-form-item>
-  </el-col>
+  <el-form-item class="i-form-item" :label="label" :prop="prop">
+    <el-switch class="i-form-input" v-model="value" :disabled="disabled"/>
+  </el-form-item>
 </template>
 <script setup>
 import {computed, onMounted} from "vue";
