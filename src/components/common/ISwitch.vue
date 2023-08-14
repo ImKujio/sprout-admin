@@ -11,9 +11,9 @@ import {computed, onMounted} from "vue";
 const emits = defineEmits(["update:modelValue"])
 const props = defineProps({
   modelValue: {type: Boolean, default: false},
-  span: {type: Number, default: 5},
   label: {type: String, default: null},
   prop: {type: String, default: null},
+
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
 

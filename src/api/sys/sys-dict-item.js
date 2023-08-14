@@ -17,7 +17,7 @@ export default {
      * @param {Object} def
      * @returns {SysDictItem}
      */
-    new(def = {}) {
+    new(def = {}){
         return def
     },
     /**
@@ -27,19 +27,21 @@ export default {
      */
     list(query) {
         return request({
-            url: '/sys/dict-item/list',
+            url: '/sys-dict-item/list',
             method: 'get',
             params: query
         })
     },
     /**
-     * 查询系统字典项总数量
-     * @returns {number}
+     * 查询数量
+     * @param {Query} query
+     * @returns {Promise<number>}
      */
-    total() {
+    count(query) {
         return request({
-            url: '/sys/dict-item/total',
-            method: 'get'
+            url: '/sys-dict-item/count',
+            method: 'get',
+            params: query
         })
     },
     /**
@@ -49,7 +51,7 @@ export default {
      */
     get(id) {
         return request({
-            url: '/sys/dict-item/' + id,
+            url: '/sys-dict-item/' + id,
             method: 'get'
         })
     },
@@ -60,7 +62,7 @@ export default {
      */
     all(fields) {
         return request({
-            url: '/sys/dict-item/all',
+            url: '/sys-dict-item/all',
             method: 'get',
             params: {fields}
         })
@@ -71,7 +73,7 @@ export default {
      */
     put(data) {
         return request({
-            url: '/sys/dict-item',
+            url: '/sys-dict-item',
             method: 'put',
             data: data
         })
@@ -82,7 +84,7 @@ export default {
      */
     del(id) {
         return request({
-            url: '/sys/dict-item/' + id,
+            url: '/sys-dict-item/' + id,
             method: 'delete'
         })
     }

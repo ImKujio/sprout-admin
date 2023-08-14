@@ -1,6 +1,6 @@
 <template>
   <el-form-item class="i-form-item" :label="label" :prop="prop" :required="required" :rules="rules" :error="error">
-    <el-input class="i-form-input" v-model="value" :placeholder="'请输入'+label" :maxlength="length"
+    <el-input class="i-form-input" v-model="value" :placeholder="'请输入'+label" :maxlength="maxLength" :minlength="minLength"
               @blur="onblur" :disabled="disabled" clearable :type="textarea ? 'textarea' : 'text'"
               :show-password="password">
       <template v-if="slotPrepend" #prepend>
@@ -24,7 +24,8 @@ const props = defineProps({
   prop: {type: String, default: null},
   disabled: {type: Boolean, default: false},
   required: {type: Boolean, default: false},
-  length: {type: Number, default: null},
+  maxLength: {type: Number, default: null},
+  minLength: {type: Number, default: null},
   rules: {type: Object, default: []},
   error: {type: [String, null], default: null},
 

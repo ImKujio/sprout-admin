@@ -7,7 +7,7 @@
         <operate-item type="danger" icon="del" label="删除" :disabled="!dictList.select" @click="onDictDel"/>
       </operate-bar>
     </i-card>
-    <i-card fill margin="4px 0" padding="0 16px">
+    <i-card fill margin="4px 0" padding="16px">
       <i-table :list="dictList">
         <el-table-column prop="name" label="字典名"/>
         <el-table-column prop="label" label="显示名"/>
@@ -20,7 +20,7 @@
       </i-table>
     </i-card>
     <i-card padding="10px 16px">
-      <i-page :page="dictQuery.page" :total="dictTotal" @refresh="reload"/>
+      <i-page :page="dictQuery.page" :total="dictCount" @refresh="reload"/>
     </i-card>
     <i-dialog :dialog="dictDialog" @save="onSave">
       <i-form :form="dictForm" :cols="3">
@@ -63,7 +63,7 @@ const dictQuery = defQuery()
 const dictDialog = defDialog()
 const dictForm = defForm(sysDict.new())
 const dictList = defList(() => sysDict.list(dictQuery))
-const dictTotal = asyncRef(() => sysDict.total(), 0)
+const dictCount = asyncRef(() => sysDict.count(dictQuery), 0)
 
 const itemQuery = allQuery()
 const itemDialog = defDialog()
@@ -90,11 +90,11 @@ async function onDictDel() {
 }
 
 async function onSave() {
-  if (!await dictForm.valid()) return
-  dictDialog.loading = true
-  await sysDict.putWithItems(dictForm.data, itemList.data)
-  dictDialog.close()
-  reload()
+  await dictForm.valid()
+  dictDialog.load(async () => {
+    await sysDict.putWithItems(dictForm.data, itemList.data)
+    reload()
+  })
 }
 
 function onItemAdd() {
@@ -112,7 +112,7 @@ function onItemDel() {
 }
 
 async function onItemSave() {
-  if (!await itemForm.valid()) return
+  await itemForm.valid()
   itemList.put(itemForm.data, itemForm.isEdit())
   itemDialog.close()
 }

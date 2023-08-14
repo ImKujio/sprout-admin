@@ -31,7 +31,7 @@ export default {
      */
     list(query) {
         return request({
-            url: '/test/student/list',
+            url: '/test-student/list',
             method: 'get',
             params: query
         })
@@ -42,7 +42,7 @@ export default {
      */
     total() {
         return request({
-            url: '/test/student/total',
+            url: '/test-student/total',
             method: 'get'
         })
     },
@@ -53,7 +53,7 @@ export default {
      */
     get(id) {
         return request({
-            url: '/test/student' + id,
+            url: '/test-student' + id,
             method: 'get'
         })
     },
@@ -63,7 +63,7 @@ export default {
      */
     all(fields) {
         return request({
-            url: '/test/student/all',
+            url: '/test-student/all',
             method: 'get',
             params: {fields}
         })
@@ -74,7 +74,7 @@ export default {
      */
     put(data) {
         return request({
-            url: '/test/student',
+            url: '/test-student',
             method: 'put',
             data: data
         })
@@ -85,7 +85,7 @@ export default {
      */
     del(id) {
         return request({
-            url: '/test/student/' + id,
+            url: '/test-student/' + id,
             method: 'delete'
         })
     },
@@ -93,7 +93,7 @@ export default {
         const form = new FormData()
         form.append("file", file)
         return request({
-            url: '/test/student/upload-avatar',
+            url: '/test-student/upload-avatar',
             method: 'post',
             data: form,
             headers: {

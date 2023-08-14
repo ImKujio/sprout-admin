@@ -37,8 +37,8 @@ function onRefresh() {
   flex-direction: row;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 
   .el-button {
     padding: 8px 10px;

@@ -63,5 +63,41 @@ export default {
             url: '/is-login',
             method: "get"
         })
-    }
+    },
+
+    /**
+     * 修改登录用户的密码
+     * @param {string} old
+     * @param {string} fresh
+     */
+    changePassword(old,fresh){
+        return request({
+            url:'/change-password',
+            method: "post",
+            data: {old,fresh}
+        })
+    },
+
+    /**
+     * 重置密码
+     * @param {string} username 用户名
+     */
+    resetPassword(username) {
+        return request({
+            url: '/reset-password',
+            method: 'post',
+            data: username
+        })
+    },
+
+    /**
+     * 登录用户信息
+     * @returns {Promise<SysUser>}
+     */
+    loginInfo() {
+        return request({
+            url: '/sys-user/login-info',
+            method: "get"
+        })
+    },
 }

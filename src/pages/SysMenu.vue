@@ -7,7 +7,7 @@
         <operate-item type="danger" icon="del" label="删除" :disabled="!list.select" @click="onDel"/>
       </operate-bar>
     </i-card>
-    <i-card fill margin="4px 0 0" padding="0 16px">
+    <i-card fill margin="4px 0 0" padding="16px">
       <i-table :list="list" sort="sort" tree>
         <el-table-column label="菜单">
           <template #default="{row}">
@@ -51,7 +51,6 @@ const list = defList(() => sysMenu.list(query))
 
 const types = asyncRef(sysDict.getByName("admin_menu_type"), {})
 
-
 const menus = computed(() => {
   const data = list.data.filter(i => i.type === sysMenu.TYPE.MENU)
   data.splice(0, 0, sysMenu.new({id: 0, pid: -1, name: "主目录"}))
@@ -73,11 +72,11 @@ function onDel() {
 }
 
 async function onSave() {
-  if (!await form.valid()) return
-  dialog.loading = true
-  await sysMenu.put(form.data)
-  dialog.close()
-  reload()
+  await form.valid()
+  dialog.load(async () => {
+    await sysMenu.put(form.data)
+    reload()
+  })
 }
 
 const reload = loadAsyncRef(() => {

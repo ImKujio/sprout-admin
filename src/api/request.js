@@ -7,22 +7,23 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
 const TokenKey = 'Sprout-Token'
 
-export const BASE_API_URL = import.meta.env.VITE_APP_BASE_API
-export const REQUEST_TIMEOUT = 10 * 1000
-
-
 const service = axios.create({
-    baseURL: BASE_API_URL,
-    timeout: REQUEST_TIMEOUT
+    baseURL: import.meta.env.VITE_APP_BASE_API,
+    timeout: 10 * 1000
 })
-
 
 service.constant = {
     baseURL: import.meta.env.VITE_APP_BASE_API,
     timeout: 10 * 1000,
     headers() {
-        return Cookies.get(TokenKey)
+        return {
+            'Authorization': Cookies.get(TokenKey)
+        }
     }
+}
+
+export function putToken(token) {
+    Cookies.set(TokenKey, token)
 }
 
 service.interceptors.request.use(config => {
@@ -35,24 +36,50 @@ service.interceptors.request.use(config => {
 })
 
 service.interceptors.response.use(response => {
-    if (response.data.code === 200) {
-        Cookies.set(TokenKey, response.headers['authorization'])
-        return response.data.data
+    if (response.status === 200) {
+        return handleResponse(response.data)
+    } else {
+        ElMessage({message: response.statusText, type: 'error', grouping: true})
+        return Promise.reject(response.statusText)
     }
-    if (response.data.code === 401) {
-        if (location.pathname !== '/login') {
-            if (!!Cookies.get(TokenKey)) {
-                Cookies.remove(TokenKey)
-                ElMessage({message: '登录已过期，请重新登录', type: 'error'})
-            }
-            router.push("/login").then()
+})
+
+const responseLock = new SyncLock()
+
+const lastResponse = {
+    msg: null,
+    login: false,
+}
+
+export async function handleResponse(data) {
+    if (data.code === 200) {
+        lastResponse.msg = null
+        lastResponse.login = false
+        return data.data
+    }
+    await responseLock.lock()
+    let msg = data.msg
+    if (data.code === 401) {
+        console.log(router.currentRoute)
+        if (!!Cookies.get(TokenKey)) {
+            Cookies.remove(TokenKey)
+            msg = '登录已过期，请重新登录'
+        }
+        if (!lastResponse.login) {
+            router.push("/login").finally()
+            lastResponse.login = true
         }
     }
-    if (response.data.code === 403) {
-        ElMessage({message: '您当前没有权限访问该数据', type: 'error'})
+    if (data.code === 403) {
+        msg = '您没有权限访问该数据'
     }
-    return Promise.reject(response.data.msg)
-})
+    if (lastResponse.msg !== data.msg) {
+        ElMessage({message: msg, type: 'error'})
+        lastResponse.msg = data.msg
+    }
+    await responseLock.unlock()
+    throw new Error(msg)
+}
 
 export function encodeParams(obj, prefix = null) {
     const str = [];

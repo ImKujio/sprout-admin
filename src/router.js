@@ -40,7 +40,7 @@ router.beforeEach(async (to, from, next) => {
     }
     if (!hasLoadMenu && !['/login'].includes(to.path)) {
         const data = await Promise.all([
-            sysUser.loginUser(),
+            sysLogin.loginInfo(),
             sysMenu.userMenus(),
         ])
         for (let menu of data[1]) {

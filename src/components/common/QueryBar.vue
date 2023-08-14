@@ -1,5 +1,5 @@
 <template>
-  <div v-show="query.visible" class="query-bar">
+  <div v-if="query.visible" class="query-bar">
     <div ref="formRef" class="flex-fill-row">
       <el-form class="query-bar-form" :style="style" :model="query.where" label-width="auto"
                label-position="right" :show-message="false" @keydown.enter.prevent="onQuery">
@@ -19,14 +19,14 @@
 
 <script setup>
 import {Query} from "@/utils/page-utils";
-import {onBeforeUnmount, onMounted, reactive, ref} from "vue";
+import {onBeforeUnmount, reactive, ref, watch} from "vue";
 
 const emits = defineEmits(["query"])
 
 const props = defineProps({
   query: {type: Query, default: true},
   reset: {type: Boolean, default: true},
-  itemWidth: {type: Number, default: 280}
+  itemWidth: {type: Number, default: 300}
 })
 
 const formRef = ref()
@@ -39,7 +39,6 @@ const resizeObserver = new ResizeObserver(entries => {
     const width = entry.contentRect.width
     if (width === 0) return
     let times = Math.floor(width / props.itemWidth)
-    console.log(times)
     times = times > 1 ? times : 1
     const array = []
     for (let i = 0; i < times; i++) {
@@ -49,13 +48,12 @@ const resizeObserver = new ResizeObserver(entries => {
   }
 })
 
-onMounted(() => {
-  console.log(formRef.value)
-  resizeObserver.observe(formRef.value)
+watch(() => formRef.value, (n) => {
+  if (n) resizeObserver.observe(formRef.value)
 })
 
 onBeforeUnmount(() => {
-  resizeObserver.unobserve(formRef.value)
+  if (formRef.value) resizeObserver.unobserve(formRef.value)
 })
 
 function onReset() {
@@ -76,9 +74,9 @@ function onQuery() {
   flex-direction: row;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--el-border-color);
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-top: 1px solid var(--el-border-color);
   align-items: end;
 
   .el-button {
@@ -107,6 +105,7 @@ function onQuery() {
 
       .i-query-input {
         flex: 1;
+        width: auto !important;
 
         .el-textarea__inner {
           min-height: 86px !important;

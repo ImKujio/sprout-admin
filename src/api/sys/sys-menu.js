@@ -35,19 +35,21 @@ export default {
      */
     list(query) {
         return request({
-            url: '/sys/menu/list',
+            url: '/sys-menu/list',
             method: 'get',
             params: query
         })
     },
     /**
-     * 查询系统菜单总数量
+     * 查询数量
+     * @param {Query} query
      * @returns {Promise<number>}
      */
-    total() {
+    count(query) {
         return request({
-            url: '/sys/menu/total',
-            method: 'get'
+            url: '/sys-menu/count',
+            method: 'get',
+            params: query
         })
     },
     /**
@@ -57,7 +59,7 @@ export default {
      */
     get(id) {
         return request({
-            url: '/sys/menu/' + id,
+            url: '/sys-menu/' + id,
             method: 'get'
         })
     },
@@ -67,7 +69,7 @@ export default {
      */
     all(fields) {
         return request({
-            url: '/sys/menu/all',
+            url: '/sys-menu/all',
             method: 'get',
             params: {fields}
         })
@@ -78,7 +80,7 @@ export default {
      */
     put(data) {
         return request({
-            url: '/sys/menu',
+            url: '/sys-menu',
             method: 'put',
             data: data
         })
@@ -89,7 +91,7 @@ export default {
      */
     del(id) {
         return request({
-            url: '/sys/menu/' + id,
+            url: '/sys-menu/' + id,
             method: 'delete'
         })
     },
@@ -99,7 +101,7 @@ export default {
      */
     userMenus() {
         return request({
-            url: '/sys/menu/user-menus',
+            url: '/sys-menu/user-menus',
             method: 'get'
         })
     }

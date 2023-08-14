@@ -1,7 +1,7 @@
 <template>
   <div class="i-table" :style="{flex: !height ? 1 : 'unset',height: !height ? 'unset' : height}">
     <el-table ref="tableRef" :height="!height ? '100%' : height" :data="listData" v-loading="list.loading"
-              row-key="id" default-expand-all highlight-current-row
+              row-key="id" default-expand-all highlight-current-row border fit
               @current-change="onSelect">
       <slot></slot>
     </el-table>
@@ -56,11 +56,12 @@ function onSelect(row) {
   flex: 1;
   position: relative;
 
-  .el-table__inner-wrapper::before {
-    height: 0;
-  }
+  //.el-table__inner-wrapper::before {
+  //  height: 0;
+  //}
 
   .el-table {
+    font-size: var(--el-font-size-base);
     position: absolute;
     width: 100%;
   }

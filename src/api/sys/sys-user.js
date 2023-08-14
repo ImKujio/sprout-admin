@@ -27,7 +27,7 @@ export default {
      */
     list(query) {
         return request({
-            url: '/sys/user/list',
+            url: '/sys-user/list',
             method: 'get',
             params: query
         })
@@ -38,7 +38,7 @@ export default {
      */
     total() {
         return request({
-            url: '/sys/user/total',
+            url: '/sys-user/total',
             method: 'get'
         })
     },
@@ -49,7 +49,7 @@ export default {
      */
     get(id) {
         return request({
-            url: '/sys/user/' + id,
+            url: '/sys-user/' + id,
             method: 'get'
         })
     },
@@ -60,7 +60,7 @@ export default {
      */
     all(fields) {
         return request({
-            url: '/sys/user/all',
+            url: '/sys-user/all',
             method: 'get',
             params: {fields}
         })
@@ -72,7 +72,7 @@ export default {
      */
     put(data) {
         return request({
-            url: '/sys/user',
+            url: '/sys-user',
             method: 'put',
             data: data
         })
@@ -84,18 +84,26 @@ export default {
      */
     del(id) {
         return request({
-            url: '/sys/user/' + id,
+            url: '/sys-user/' + id,
             method: 'delete'
         })
     },
+
     /**
-     * 登录用户信息
-     * @returns {Promise<SysUser>}
+     * 上传头像
+     * @param file
+     * @returns {*}
      */
-    loginUser() {
+    uploadAvatar(file) {
+        const form = new FormData()
+        form.append("file", file)
         return request({
-            url: '/sys/user/login',
-            method: "get"
+            url: '/sys-user/upload-avatar',
+            method: 'post',
+            data: form,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         })
     }
 }

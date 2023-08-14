@@ -19,18 +19,18 @@
 
 <script setup>
 import FillContainer from "@/components/base/FillContainer.vue";
-import {list2Tree} from "@/utils/collection-utils";
+import {list2Tree, sortTree} from "@/utils/collection-utils";
 import NavMenuItem from "@/components/base/NavMenuItem.vue";
 import {computed} from "vue";
 import {useNavMenuStore, useRouteStore} from "@/store.js";
 
 const {menus} = useNavMenuStore()
 const menuTree = list2Tree(menus)
+sortTree(menuTree,"sort")
 
 const route = useRouteStore()
 
 const active = computed(() => {
-  console.log(route.path)
   if (!route.path || route.path === "" || route.path === "/") return "/index"
   return route.path
 })

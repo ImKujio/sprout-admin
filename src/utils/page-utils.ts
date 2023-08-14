@@ -1,6 +1,6 @@
 import {ElMessage, ElMessageBox} from "element-plus";
 import {asyncRef} from "./vue-utils";
-import {reactive, shallowReactive, ShallowReactive, toRaw, UnwrapNestedRefs, watch} from "vue";
+import {reactive, ref, shallowReactive, ShallowReactive, toRaw, UnwrapNestedRefs, watch} from "vue";
 
 export class Dialog {
     isOpen: boolean = false
@@ -15,6 +15,15 @@ export class Dialog {
     close() {
         this.isOpen = false
         this.loading = false
+    }
+
+    load(asyncFun: () => Promise<void>) {
+        this.loading = true
+        asyncFun().then(() => {
+            this.close()
+        }).catch().finally(() => {
+            this.loading = false
+        })
     }
 }
 
@@ -43,6 +52,10 @@ export class Query {
 
     putWhere(field, type, value) {
         this.where[field] = value == null || value === '' ? null : new Where(type, value)
+    }
+
+    putOrder(field: string, des: boolean = false) {
+        this.order[field] = des ? 'DESC' : 'ASC'
     }
 
     whereVal(field): null | string | number | boolean {
@@ -166,24 +179,22 @@ export class Form<T> {
         this._valid = valid
     }
 
-    async valid(): Promise<boolean> {
+    async valid(): Promise<void> {
         if (!this._valid) throw new Error("IForm组件未初始化校验方法")
         try {
             const valid = await this._valid()
             if (!valid) {
                 ElMessage.error('校验失败，请检查填写的数据！')
-                return false
-            } else {
-                return true
+                throw new Error("校验失败，请检查填写的数据！")
             }
         } catch (e) {
             ElMessage.error('校验失败，请检查填写的数据！')
-            return false
+            throw new Error("校验失败，请检查填写的数据！")
         }
     }
 }
 
-export function defForm<T>(raw: T): UnwrapNestedRefs<Form<T>> {
+export function defForm<T>(raw: T) {
     return reactive(new Form(raw))
 }
 
@@ -201,6 +212,10 @@ export function tempList<T>(listPromise: (() => Promise<T[]>)): ShallowReactive<
     return shallowReactive(new TempList(listPromise))
 }
 
+export function emptyList<T>(def: T) {
+    return ref<T[]>([])
+}
+
 export function defQuery(): UnwrapNestedRefs<Query> {
     return reactive(new Query())
 }
@@ -214,4 +229,3 @@ export function allQuery(): UnwrapNestedRefs<Query> {
 export function defDialog(): ShallowReactive<Dialog> {
     return shallowReactive(new Dialog())
 }
-

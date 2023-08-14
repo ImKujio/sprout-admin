@@ -37,19 +37,21 @@ export default {
     list(query) {
         console.log(query);
         return request({
-            url: '/sys/dict/list',
+            url: '/sys-dict/list',
             method: 'get',
             params: query
         })
     },
     /**
-     * 查询系统字典总数量
+     * 查询数量
+     * @param {Query} query
      * @returns {Promise<number>}
      */
-    total() {
+    count(query) {
         return request({
-            url: '/sys/dict/total',
-            method: 'get'
+            url: '/sys-dict/count',
+            method: 'get',
+            params: query
         })
     },
     /**
@@ -59,7 +61,7 @@ export default {
      */
     get(id) {
         return request({
-            url: '/sys/dict/' + id,
+            url: '/sys-dict/' + id,
             method: 'get'
         })
     },
@@ -70,7 +72,7 @@ export default {
      */
     all(fields) {
         return request({
-            url: '/sys/dict/all',
+            url: '/sys-dict/all',
             method: 'get',
             params: {fields}
         })
@@ -81,7 +83,7 @@ export default {
      */
     put(data) {
         return request({
-            url: '/sys/dict',
+            url: '/sys-dict',
             method: 'put',
             data: data
         })
@@ -93,7 +95,7 @@ export default {
      */
     putWithItems(data, items) {
         return request({
-            url: '/sys/dict/with-items',
+            url: '/sys-dict/with-items',
             method: 'put',
             data: {data, items}
         })
@@ -104,7 +106,7 @@ export default {
      */
     del(id) {
         return request({
-            url: '/sys/dict/' + id,
+            url: '/sys-dict/' + id,
             method: 'delete'
         })
     },
@@ -114,7 +116,7 @@ export default {
      */
     allDict() {
         return request({
-            url: '/sys/dict/all-dict',
+            url: '/sys-dict/all-dict',
             method: 'get'
         })
     },
