@@ -63,9 +63,9 @@ export default {
      * 按字段查询所有系统菜单
      * @returns {Promise<Object.<number,TestStudent>>}
      */
-    all(fields) {
+    dict(fields) {
         return request({
-            url: '/test-student/all',
+            url: '/test-student/dict',
             method: 'get',
             params: {fields}
         })

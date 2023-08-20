@@ -67,9 +67,9 @@ export default {
      * 按字段查询所有系统菜单
      * @returns {Promise<Object.<number,SysMenu>>}
      */
-    all(fields) {
+    dict(fields) {
         return request({
-            url: '/sys-menu/all',
+            url: '/sys-menu/dict',
             method: 'get',
             params: {fields}
         })

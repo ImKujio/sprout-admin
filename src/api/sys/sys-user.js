@@ -58,9 +58,9 @@ export default {
      * @param {string[]} fields
      * @returns {Promise<Object.<number,SysUser>>}
      */
-    all(fields) {
+    dict(fields) {
         return request({
-            url: '/sys-user/all',
+            url: '/sys-user/dict',
             method: 'get',
             params: {fields}
         })

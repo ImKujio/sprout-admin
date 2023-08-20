@@ -17,7 +17,7 @@ export default {
      * @param {Object} def
      * @returns {SysDictItem}
      */
-    new(def = {}){
+    new(def = {}) {
         return def
     },
     /**
@@ -60,9 +60,9 @@ export default {
      * @param {string[]} fields
      * @returns {Promise<Object.<number,SysDictItem>>}
      */
-    all(fields) {
+    dict(fields) {
         return request({
-            url: '/sys-dict-item/all',
+            url: '/sys-dict-item/dict',
             method: 'get',
             params: {fields}
         })

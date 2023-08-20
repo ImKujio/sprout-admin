@@ -69,9 +69,9 @@ export default {
      * @param {string[]} fields
      * @returns {Promise<Object.<number,SysDict>>}
      */
-    all(fields) {
+    dict(fields) {
         return request({
-            url: '/sys-dict/all',
+            url: '/sys-dict/dict',
             method: 'get',
             params: {fields}
         })
