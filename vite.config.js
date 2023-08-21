@@ -35,7 +35,7 @@ export default defineConfig(({mode, command}) => {
             extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
         },
         server: {
-            port: 80,
+            port: 81,
             host: true,
             proxy: {
                 '/dev': {

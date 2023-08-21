@@ -123,24 +123,27 @@ export class TempList<T> extends List<T> {
     }
 
     put(form: T, isEdit: boolean) {
+        form = toRaw(form)
+        console.log(form)
         const data = Array.of(...this.data)
-        if (isEdit) {
-            const index = this.data.indexOf(toRaw(this.select))
-            if (index < 0)
-                data.push(form)
-            else
-                data.splice(index, 1, form)
-        } else {
+        console.log(data)
+        if (!isEdit) {
             data.push(form)
+            this.data = data
+            return;
         }
-        this.data = data
+        const index = data.indexOf(toRaw(this.select))
+        if (index >= 0) {
+            data.splice(index, 1, form)
+            this.data = data
+        }
     }
 
     del() {
         if (!!this.select) {
-            const index = this.data.indexOf(toRaw(this.select))
-            if (index < 0) return
             const data = Array.of(...this.data)
+            const index = data.indexOf(toRaw(this.select))
+            if (index < 0) return
             data.splice(index, 1)
             this.data = data
         }
