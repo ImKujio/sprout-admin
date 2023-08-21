@@ -1,6 +1,11 @@
 <template>
   <section>
     <i-card padding="0 16px">
+      <operate-bar @refresh="reload" @query="query.toggle()">
+        <operate-item type="primary" icon="add" label="新增" @click="onAdd"/>
+        <operate-item type="success" icon="edit" label="编辑" :disabled="!list.select" @click="onEdit"/>
+        <operate-item type="danger" icon="del" label="删除" :disabled="!list.select" @click="onDel"/>
+      </operate-bar>
       <query-bar :query="query" @query="reload">
         <q-input :query="query" prop="name" label="姓名"/>
         <q-input :query="query" prop="age" label="年龄" number/>
@@ -8,17 +13,12 @@
         <q-select :query="query" prop="stay" label="是否在校" bool/>
         <q-date-picker :query="query" prop="birthday" label="生日"/>
       </query-bar>
-      <operate-bar @refresh="reload" @query="query.toggle()">
-        <operate-item type="primary" icon="add" label="新增" @click="onAdd"/>
-        <operate-item type="success" icon="edit" label="编辑" :disabled="!list.select" @click="onEdit"/>
-        <operate-item type="danger" icon="del" label="删除" :disabled="!list.select" @click="onDel"/>
-      </operate-bar>
     </i-card>
     <i-card fill margin="4px 0" padding="16px">
       <i-table :list="list" sort="sort" tree>
         <el-table-column prop="name" label="姓名"/>
         <el-table-column label="头像" #default="{row}">
-          <el-avatar shape="square" :size="50" :src="request.constant.baseURL + row.avatar" />
+          <el-avatar shape="square" :size="40" :src="getPath(row.avatar)" />
         </el-table-column>
         <el-table-column prop="age" label="年龄"/>
         <el-table-column label="性别" #default="{row}">
@@ -57,7 +57,7 @@ import testStudent from "@/api/test/test-student.js";
 import sysDict from "@/api/sys/sys-dict.js";
 import QDatePicker from "@/components/common/QDatePicker.vue";
 import IImageCropper from "@/components/common/IImageCropper.vue";
-import request from "@/api/request.js";
+import {getPath} from "@/api/request.js";
 
 const query = defQuery()
 const dialog = defDialog()

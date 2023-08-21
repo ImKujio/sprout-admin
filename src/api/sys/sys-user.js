@@ -4,13 +4,13 @@ import {Query} from "@/utils/page-utils"
 /**
  * 系统用户
  * @typedef {Object} SysUser
+ * @property {number} id - 编号
  * @property {string} name - 用户名
  * @property {string} nickName - 昵称
  * @property {string} avatar - 头像
  * @property {string} createTime - 创建时间
- * @property {string} owner - 所属类型
+ * @property {number} owner - 所属类型
  */
-
 export default {
     /**
      * 获取新的对象
@@ -33,13 +33,15 @@ export default {
         })
     },
     /**
-     * 查询系统用户总数量
-     * @returns {number}
+     * 查询系统用户数量
+     * @param {Query} query
+     * @returns {Promise<number>}
      */
-    total() {
+    count(query) {
         return request({
-            url: '/sys-user/total',
-            method: 'get'
+            url: '/sys-user/count',
+            method: 'get',
+            params: query
         })
     },
     /**

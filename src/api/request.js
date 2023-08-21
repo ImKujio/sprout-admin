@@ -27,6 +27,10 @@ export function putToken(token) {
     Cookies.set(TokenKey, token)
 }
 
+export function getPath(path) {
+    return path && service.constant.baseURL + path
+}
+
 service.interceptors.request.use(config => {
     config.headers['Authorization'] = Cookies.get(TokenKey)
     if ((config.method === 'get' || config.method === 'del') && config.params) {
